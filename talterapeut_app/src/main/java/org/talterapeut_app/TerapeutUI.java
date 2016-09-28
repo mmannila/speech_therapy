@@ -68,6 +68,7 @@ public class TerapeutUI extends UI {
         // The first DnD layout (located in the middle)
         DDHorizontalLayout DragDropALayout = new DDHorizontalLayout();
         DragDropALayout.setComponentHorizontalDropRatio(0.3f);
+        DragDropALayout.setSizeFull();
         DragDropALayout.setDragMode(LayoutDragMode.CLONE);
         DragDropALayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
         
@@ -93,6 +94,7 @@ public class TerapeutUI extends UI {
         // second DnD area + reset button
         DDHorizontalLayout DragDropBLayout = new DDHorizontalLayout();
         DragDropBLayout.setComponentHorizontalDropRatio(0.3f);
+        DragDropBLayout.setSizeFull();
         DragDropBLayout.setDragMode(LayoutDragMode.CLONE);
         DragDropBLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
 
