@@ -71,18 +71,6 @@ public class TerapeutUI extends UI {
         DragDropALayout.setDragMode(LayoutDragMode.CLONE);
         DragDropALayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
         
-        Button btn1 = new Button("Button 1");
-        btn1.setWidth("100px");
-        btn1.setHeight("50px");
-        DragDropALayout.addComponent(btn1);
-        Button btn2 = new Button("Button 2");
-        btn2.setWidth("100px");
-        btn2.setHeight("50px");
-        DragDropALayout.addComponent(btn2);
-        Button btn3 = new Button("Button 3");
-        btn3.setWidth("100px");
-        btn3.setHeight("50px");
-        DragDropALayout.addComponent(btn3);
         gridLayout.addComponent(DragDropALayout);
         
         
@@ -103,7 +91,25 @@ public class TerapeutUI extends UI {
         gridLayout.addComponent(new Label(" "));
         
         // second DnD area + reset button
-        gridLayout.addComponent(new Button("Drag+Drop 2"));
+        DDHorizontalLayout DragDropBLayout = new DDHorizontalLayout();
+        DragDropBLayout.setComponentHorizontalDropRatio(0.3f);
+        DragDropBLayout.setDragMode(LayoutDragMode.CLONE);
+        DragDropBLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
+
+        Button btn1 = new Button("Button 1");
+        btn1.setWidth("100px");
+        btn1.setHeight("50px");
+        DragDropBLayout.addComponent(btn1);
+        Button btn2 = new Button("Button 2");
+        btn2.setWidth("100px");
+        btn2.setHeight("50px");
+        DragDropBLayout.addComponent(btn2);
+        Button btn3 = new Button("Button 3");
+        btn3.setWidth("100px");
+        btn3.setHeight("50px");
+        DragDropBLayout.addComponent(btn3);
+        gridLayout.addComponent(DragDropBLayout);
+
         gridLayout.addComponent(new Button("Reset"));
         
         
