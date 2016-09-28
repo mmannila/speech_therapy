@@ -21,8 +21,10 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import fi.jasoft.dragdroplayouts.DDCssLayout;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
+import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
 
 /**
@@ -66,11 +68,11 @@ public class TerapeutUI extends UI {
         
        
         // The first DnD layout (located in the middle)
-        DDHorizontalLayout DragDropALayout = new DDHorizontalLayout();
-        DragDropALayout.setComponentHorizontalDropRatio(0.3f);
+        DDCssLayout DragDropALayout = new DDCssLayout();
+        //DragDropALayout.setComponentHorizontalDropRatio(0.3f);
         DragDropALayout.setSizeFull();
         DragDropALayout.setDragMode(LayoutDragMode.CLONE);
-        DragDropALayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
+        DragDropALayout.setDropHandler(new DefaultCssLayoutDropHandler());
         
         gridLayout.addComponent(DragDropALayout);
         
@@ -92,11 +94,11 @@ public class TerapeutUI extends UI {
         gridLayout.addComponent(new Label(" "));
         
         // second DnD area + reset button
-        DDHorizontalLayout DragDropBLayout = new DDHorizontalLayout();
-        DragDropBLayout.setComponentHorizontalDropRatio(0.3f);
+        DDCssLayout DragDropBLayout = new DDCssLayout();
+        //DragDropBLayout.setComponentHorizontalDropRatio(0.3f);
         DragDropBLayout.setSizeFull();
         DragDropBLayout.setDragMode(LayoutDragMode.CLONE);
-        DragDropBLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
+        DragDropBLayout.setDropHandler(new DefaultCssLayoutDropHandler());
 
         Button btn1 = new Button("Button 1");
         btn1.setWidth("100px");
