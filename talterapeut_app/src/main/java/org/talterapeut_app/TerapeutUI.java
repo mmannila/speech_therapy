@@ -7,19 +7,8 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.Resource;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Audio;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.server.*;
+import com.vaadin.ui.*;
 
 import fi.jasoft.dragdroplayouts.DDCssLayout;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
@@ -100,18 +89,22 @@ public class TerapeutUI extends UI {
         DragDropBLayout.setDragMode(LayoutDragMode.CLONE);
         DragDropBLayout.setDropHandler(new DefaultCssLayoutDropHandler());
 
-        Button btn1 = new Button("Button 1");
-        btn1.setWidth("100px");
-        btn1.setHeight("50px");
-        DragDropBLayout.addComponent(btn1);
-        Button btn2 = new Button("Button 2");
-        btn2.setWidth("100px");
-        btn2.setHeight("50px");
-        DragDropBLayout.addComponent(btn2);
-        Button btn3 = new Button("Button 3");
-        btn3.setWidth("100px");
-        btn3.setHeight("50px");
-        DragDropBLayout.addComponent(btn3);
+        Image image1 = new Image("book");
+        image1.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/kirja45px.png"));
+        image1.setWidth("100px");
+        image1.setHeight("100px");
+        DragDropBLayout.addComponent(image1);
+        Image image2 = new Image("group");
+        image2.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/group-45px.png"));
+        image2.setWidth("100px");
+        image2.setHeight("100px");
+        DragDropBLayout.addComponent(image2);
+        Image image3 = new Image("map");
+        image3.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/kartta45px.png"));
+        image3.setWidth("100px");
+        image3.setHeight("100px");
+        DragDropBLayout.addComponent(image3);
+
         gridLayout.addComponent(DragDropBLayout);
 
         gridLayout.addComponent(new Button("Reset"));
