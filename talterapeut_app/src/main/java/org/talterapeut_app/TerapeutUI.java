@@ -234,6 +234,7 @@ public class TerapeutUI extends UI {
         imageOfObject.setDescription("Object");
         setOfImages.add(imageOfObject);
 
+        Collections.shuffle(setOfImages);
         reset();
     }
 
