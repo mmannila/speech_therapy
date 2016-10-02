@@ -2,6 +2,7 @@ package org.talterapeut_app;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -17,6 +18,7 @@ import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
+import org.talterapeut_app.model.ImageLoader;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -182,26 +184,36 @@ public class TerapeutUI extends UI {
     	phraseLabel.setValue("");
     	dragDropArea_A.removeAllComponents();
     	dragDropArea_B.removeAllComponents();
-    	
-    	
-    	Image image1 = new Image();
-        image1.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/kirja45px.png"));
-        image1.setWidth("75px");
-        image1.setHeight("75px");
-        image1.setDescription("book");
-        dragDropArea_B.addComponent(image1);
-        Image image2 = new Image();
-        image2.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/group-45px.png"));
-        image2.setWidth("75px");
-        image2.setHeight("75px");
-        image2.setDescription("group");
-        dragDropArea_B.addComponent(image2);
-        Image image3 = new Image();
-        image3.setSource(new ExternalResource("http://www.utu.fi/fi/SiteCollectionImages/kartta45px.png"));
-        image3.setWidth("75px");
-        image3.setHeight("75px");
-        image3.setDescription("map");
-        dragDropArea_B.addComponent(image3);
+
+        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+        int randomIndex;
+
+        // Subject
+        ArrayList<Image> Subjects = ImageLoader.loadImages(basepath+"/WEB-INF/subjekt");
+        randomIndex = ThreadLocalRandom.current().nextInt(0, Subjects.size());
+        Image ImageOfSubject = Subjects.get(randomIndex);
+        ImageOfSubject.setWidth("100px");
+        ImageOfSubject.setHeight("100px");
+        ImageOfSubject.setDescription("Subject");
+        dragDropArea_B.addComponent(ImageOfSubject);
+
+        // Verb
+        ArrayList<Image> Verbs= ImageLoader.loadImages(basepath + "/WEB-INF/verb/");
+        randomIndex = ThreadLocalRandom.current().nextInt(0, Verbs.size());
+        Image imageOfVerb = Verbs.get(randomIndex);
+        imageOfVerb.setWidth("100px");
+        imageOfVerb.setHeight("100px");
+        imageOfVerb.setDescription("Verb");
+        dragDropArea_B.addComponent(imageOfVerb);
+
+        // Object
+        ArrayList<Image> Objects = ImageLoader.loadImages(basepath + "/WEB-INF/objekt/");
+        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+        Image imageOfObject = Objects.get(randomIndex);
+        imageOfObject.setWidth("100px");
+        imageOfObject.setHeight("100px");
+        imageOfObject.setDescription("Object");
+        dragDropArea_B.addComponent(imageOfObject);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
