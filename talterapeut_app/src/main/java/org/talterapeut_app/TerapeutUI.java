@@ -184,6 +184,7 @@ public class TerapeutUI extends UI {
     
     // resets the DnD layouts and the phrase label
     private void reset() {
+        phraseLabel.setValue("");
     	dragDropArea_A.removeAllComponents();
     	dragDropArea_B.removeAllComponents();
 
@@ -197,6 +198,7 @@ public class TerapeutUI extends UI {
 
     // Loads new set of images
     private void randomize() {
+        phraseLabel.setValue("");
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
         int randomIndex;
         setOfImages.clear();
