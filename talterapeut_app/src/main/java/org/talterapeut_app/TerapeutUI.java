@@ -2,6 +2,8 @@ package org.talterapeut_app;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +35,8 @@ public class TerapeutUI extends UI {
 	
 	int phrase_length = 3;	// the current phrase length (or no. of words)
 	ArrayList correct_order = new ArrayList(); // stores the correct order of the current phrase
-	
+    ArrayList<Image> setOfImages = new ArrayList<Image>();
+
     final GridLayout gridLayout = new GridLayout(3, 3);
 	
     VerticalLayout wordSelectLayout = new VerticalLayout();
@@ -56,8 +59,8 @@ public class TerapeutUI extends UI {
     	initDragDropLayouts();
     	initSoundButton();
     	initResetButton();
-    	
-    	reset();
+
+        randomize();
 
         setupUI();
         
@@ -131,7 +134,7 @@ public class TerapeutUI extends UI {
     private void initRandomButton() {
     	randomButton = new Button("Randomize");
     	randomButton.addClickListener( e -> {
-    	
+            randomize();
     		});
     }
     
@@ -181,39 +184,45 @@ public class TerapeutUI extends UI {
     
     // resets the DnD layouts and the phrase label
     private void reset() {
-    	phraseLabel.setValue("");
     	dragDropArea_A.removeAllComponents();
     	dragDropArea_B.removeAllComponents();
 
+        for (int i = 0; i < 3; i++) {
+            Image image = setOfImages.get(i);
+            image.setWidth("100px");
+            image.setHeight("100px");
+            dragDropArea_B.addComponent(image);
+        }
+    }
+
+    // Loads new set of images
+    private void randomize() {
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
         int randomIndex;
+        setOfImages.clear();
 
         // Subject
         ArrayList<Image> Subjects = ImageLoader.loadImages(basepath+"/WEB-INF/subjekt");
         randomIndex = ThreadLocalRandom.current().nextInt(0, Subjects.size());
-        Image ImageOfSubject = Subjects.get(randomIndex);
-        ImageOfSubject.setWidth("100px");
-        ImageOfSubject.setHeight("100px");
-        ImageOfSubject.setDescription("Subject");
-        dragDropArea_B.addComponent(ImageOfSubject);
+        Image imageOfSubject = Subjects.get(randomIndex);
+        imageOfSubject.setDescription("Subject");
+        setOfImages.add(imageOfSubject);
 
         // Verb
         ArrayList<Image> Verbs= ImageLoader.loadImages(basepath + "/WEB-INF/verb/");
         randomIndex = ThreadLocalRandom.current().nextInt(0, Verbs.size());
         Image imageOfVerb = Verbs.get(randomIndex);
-        imageOfVerb.setWidth("100px");
-        imageOfVerb.setHeight("100px");
         imageOfVerb.setDescription("Verb");
-        dragDropArea_B.addComponent(imageOfVerb);
+        setOfImages.add(imageOfVerb);
 
         // Object
         ArrayList<Image> Objects = ImageLoader.loadImages(basepath + "/WEB-INF/objekt/");
         randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
         Image imageOfObject = Objects.get(randomIndex);
-        imageOfObject.setWidth("100px");
-        imageOfObject.setHeight("100px");
         imageOfObject.setDescription("Object");
-        dragDropArea_B.addComponent(imageOfObject);
+        setOfImages.add(imageOfObject);
+
+        reset();
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
