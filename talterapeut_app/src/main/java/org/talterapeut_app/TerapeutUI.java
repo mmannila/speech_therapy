@@ -3,6 +3,7 @@ package org.talterapeut_app;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -168,6 +169,15 @@ public class TerapeutUI extends UI {
             	for (int i = 1; i < length; i++)
             		tmp += " " + dragDropArea_A.getComponent(i).getDescription();
             	phraseLabel.setValue(tmp);
+
+                // test if the answer was correct or not
+                if (Objects.equals(tmp,"Subject Verb Object")) {
+                    new Notification("Correct!").show(Page.getCurrent());
+                }
+                else {
+                    new Notification("Incorrect").show(Page.getCurrent());
+                }
+
         	}
         	else
         		phraseLabel.setValue("This DnD layout is empty!");
