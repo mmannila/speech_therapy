@@ -160,7 +160,8 @@ public class TerapeutUI extends UI {
                 phraseLabel.setValue(tmp);
 
                 // test if the answer was correct or not
-                if (Objects.equals(tmp,"Subject Verb Object") || Objects.equals(tmp, "Subject Verb")) {
+                if ((Objects.equals(tmp,"Subject Verb Object") && phrase_length == 3) ||
+                        (Objects.equals(tmp, "Subject Verb") && phrase_length == 2)) {
                     new Notification("Correct!").show(Page.getCurrent());
                 }
                 else {
