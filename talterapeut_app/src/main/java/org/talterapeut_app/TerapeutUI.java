@@ -1,27 +1,23 @@
 package org.talterapeut_app;
 
-import java.io.File;
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.*;
+import com.vaadin.ui.Button.ClickListener;
+import fi.jasoft.dragdroplayouts.DDCssLayout;
+import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
+import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
+import org.talterapeut_app.model.ImageLoader;
+
+import javax.servlet.annotation.WebServlet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.servlet.annotation.WebServlet;
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.*;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-
-import fi.jasoft.dragdroplayouts.DDCssLayout;
-import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
-import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
-import org.talterapeut_app.model.ImageLoader;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -35,22 +31,22 @@ import org.talterapeut_app.model.ImageLoader;
 public class TerapeutUI extends UI {
 
     final private String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-    int phrase_length = 3;	// the current phrase length (or no. of words)
-    ArrayList correct_order = new ArrayList(); // stores the correct order of the current phrase
-    ArrayList<Image> setOfImages = new ArrayList<Image>();
+    private int phrase_length = 3;	// the current phrase length (or no. of words)
+    private ArrayList correct_order = new ArrayList(); // stores the correct order of the current phrase
+    private ArrayList<Image> setOfImages = new ArrayList<Image>();
 
-    final GridLayout gridLayout = new GridLayout(3, 3);
+    private final GridLayout gridLayout = new GridLayout(3, 3);
 
-    VerticalLayout wordSelectLayout = new VerticalLayout();
-    Button folderButton;
-    Button randomButton;
-    Button resetButton;
+    private VerticalLayout wordSelectLayout = new VerticalLayout();
+    private Button folderButton;
+    private Button randomButton;
+    private Button resetButton;
 
-    VerticalLayout dragDropALayout;
-    Label phraseLabel;
-    DDCssLayout dragDropArea_A;
-    DDCssLayout dragDropArea_B;
-    Button playPhraseButton;
+    private VerticalLayout dragDropALayout;
+    private Label phraseLabel;
+    private DDCssLayout dragDropArea_A;
+    private DDCssLayout dragDropArea_B;
+    private Button playPhraseButton;
 
 
     @Override
@@ -92,52 +88,44 @@ public class TerapeutUI extends UI {
         wordSelectLayout = new VerticalLayout();
 
         // listener which changes the phrase length + the other components
-        ClickListener setWordCount = new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                // fetch button's corresponding number via its description to change
-                // the word count (phrase_length) + refresh other components
-            }
+        ClickListener setWordCount = (ClickListener) event -> {
+            // fetch button's corresponding number via its description to change
+            // the word count (phrase_length) + refresh other components
+            Button b = event.getButton();
+            phrase_length = Integer.parseInt(b.getDescription());
+
+            randomize();
         };
 
         Button twoWordButton = new Button("Two Words");
         Button threeWordButton = new Button("Three Words");
-        Button fourWordButton = new Button("Four Words");
 
         // these descriptions are used to set the phrase length
         twoWordButton.setDescription("2");
-        twoWordButton.setDescription("3");
-        twoWordButton.setDescription("4");
+        threeWordButton.setDescription("3");
 
         // all buttons use the same listener
         twoWordButton.addClickListener(setWordCount);
         threeWordButton.addClickListener(setWordCount);
-        fourWordButton.addClickListener(setWordCount);
 
         twoWordButton.setWidth("100%");
         threeWordButton.setWidth("100%");
-        fourWordButton.setWidth("100%");
 
         wordSelectLayout.addComponent(twoWordButton);
         wordSelectLayout.addComponent(threeWordButton);
-        wordSelectLayout.addComponent(fourWordButton);
     }
 
 
     // the word folder containing all words/images
     private void initWordFolder() {
         folderButton = new Button("Word Folder");
-        folderButton.addClickListener( e -> {
-            promptImageSelector();
-        });
+        folderButton.addClickListener( e -> promptImageSelector());
     }
 
     // button used to randomize
     private void initRandomButton() {
         randomButton = new Button("Randomize");
-        randomButton.addClickListener( e -> {
-            randomize();
-        });
+        randomButton.addClickListener( e -> randomize());
     }
 
     // initializes the drag and drop layouts
@@ -172,7 +160,7 @@ public class TerapeutUI extends UI {
                 phraseLabel.setValue(tmp);
 
                 // test if the answer was correct or not
-                if (Objects.equals(tmp,"Subject Verb Object")) {
+                if (Objects.equals(tmp,"Subject Verb Object") || Objects.equals(tmp, "Subject Verb")) {
                     new Notification("Correct!").show(Page.getCurrent());
                 }
                 else {
@@ -188,9 +176,7 @@ public class TerapeutUI extends UI {
     // button which calls the reset method
     private void initResetButton() {
         resetButton = new Button("Reset");
-        resetButton.addClickListener( e -> {
-            reset();
-        });
+        resetButton.addClickListener( e -> reset());
     }
 
     // resets the DnD layouts and the phrase label
@@ -199,7 +185,7 @@ public class TerapeutUI extends UI {
         dragDropArea_A.removeAllComponents();
         dragDropArea_B.removeAllComponents();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < phrase_length; i++) {
             Image image = setOfImages.get(i);
             image.setWidth("100px");
             image.setHeight("100px");
@@ -263,7 +249,6 @@ public class TerapeutUI extends UI {
     }
 
 
-
     // Loads new set of images
     private void randomize() {
         phraseLabel.setValue("");
@@ -286,11 +271,13 @@ public class TerapeutUI extends UI {
         setOfImages.add(imageOfVerb);
 
         // Object
-        ArrayList<Image> Objects = ImageLoader.loadImages(basepath + "/WEB-INF/objekt/");
-        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
-        Image imageOfObject = Objects.get(randomIndex);
-        imageOfObject.setDescription("Object");
-        setOfImages.add(imageOfObject);
+        if (phrase_length == 3) {
+            ArrayList<Image> Objects = ImageLoader.loadImages(basepath + "/WEB-INF/objekt/");
+            randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+            Image imageOfObject = Objects.get(randomIndex);
+            imageOfObject.setDescription("Object");
+            setOfImages.add(imageOfObject);
+        }
 
         Collections.shuffle(setOfImages);
         reset();
