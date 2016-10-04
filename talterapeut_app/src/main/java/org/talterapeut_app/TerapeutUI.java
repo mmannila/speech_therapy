@@ -1,6 +1,7 @@
 package org.talterapeut_app;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
@@ -8,6 +9,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.annotation.WebServlet;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -22,6 +25,7 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
 import org.talterapeut_app.model.ImageLoader;
+import org.talterapeut_app.Constant;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -51,12 +55,15 @@ public class TerapeutUI extends UI {
     DDCssLayout dragDropArea_A;
     DDCssLayout dragDropArea_B;
     Button playPhraseButton;
+    
+    SoundMachine soundMachine;
 
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         initWordLengthLayout();
         initWordFolder();
+        initSoundMachine();
         initRandomButton();
         initDragDropLayouts();
         initSoundButton();
@@ -131,6 +138,18 @@ public class TerapeutUI extends UI {
             promptImageSelector();
         });
     }
+    
+    /**
+     * Initializes audio. 
+     * Could throw Exceptions to master initializer to handle, but does not.
+     */
+    private void initSoundMachine() {
+    	try {
+			soundMachine = new SoundMachine(basepath + Constant.AUDIO_BASE_PATH);
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+    }
 
     // button used to randomize
     private void initRandomButton() {
@@ -178,6 +197,10 @@ public class TerapeutUI extends UI {
                 else {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
+                
+                // TODO always plays success!
+                // if (isAnswerCorrect(Objects)) // TODO implementation missing
+                soundMachine.playSound(Constant.SUCCESS);
 
             }
             else
