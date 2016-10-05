@@ -1,83 +1,56 @@
 package org.talterapeut_app;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
-
 import org.talterapeut_app.Constant;
+
+import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.Audio;
 
 /**
  * Audio
  *
  */
-class SoundMachine implements LineListener {
+class SoundMachine  {
 	
 	private String mediaBasepath; // media files basepath
-	private AudioInputStream audioStream;
+	private Audio audio;
 	
-	SoundMachine(String mediaBasepath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	Resource resource_S;
+	Resource resource_F;
+
+	SoundMachine(Audio audio, String mediaBasepath) {
+		this.audio = audio;
 		this.mediaBasepath = mediaBasepath;
-		LoadResources();
-	}
-	
-	// implement the LineListener interface#update
-	@Override
-	public void update(LineEvent arg) {
-		System.out.println("Sound is coming..."); // TODO get a logger
+		loadResources();
+		
 	}
 	
 	/**
 	 * Sets up audio/media resources 
-	 * 
-	 * @throws IOException 
-	 * @throws UnsupportedAudioFileException 
-	 * @throws LineUnavailableException 
 	 */
-	public void LoadResources() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		
-		audioStream = AudioSystem.getAudioInputStream(new File(mediaBasepath + Constant.SOUND_SUCCESS_FILENAME));
-		System.out.println("Loaded: " + Constant.SOUND_SUCCESS_FILENAME);
+	public void loadResources() {
+		resource_S = new FileResource(new File(mediaBasepath + Constant.SOUND_SUCCESS_FILENAME));
+		resource_F = new FileResource(new File(mediaBasepath + Constant.SOUND_FAIL_FILENAME));
+		System.out.println("Loaded resources.");
 	}
 	
 	/**
 	 * Plays success sound
-	 * @throws LineUnavailableException 
-	 * @throws IOException 
 	 */
-	public void PlaySuccess() throws LineUnavailableException, IOException {
-		
-		// TODO use caching to preserve audioStream
-		try {
-			LoadResources();
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("Clip...");
-		Clip clip;
-		Line.Info linfo = new Line.Info(Clip.class);
-	    Line line = AudioSystem.getLine(linfo);
-	    clip = (Clip) line;
-	    clip.addLineListener(this);
-		clip.open(audioStream); // audioStream is usually killed after one play!
-		clip.start();
-		System.out.println("...playing!");
+	public void playSuccess() {
+		System.out.println("Playing 'success'... " + resource_S.getMIMEType());
+        audio.setSource(resource_S);
+    	audio.play();
 	}
 	
 	/**
 	 * Plays failure sound 
 	 */
-	public void PlayFail() {
-		System.out.println("[SoundMachine.Playfail] I'm afraid I can't do that."); // TODO
+	public void playFail() {
+		System.out.println("Playing 'fail'... " + resource_F.getMIMEType());
+        audio.setSource(resource_F);
+    	audio.play();
 	}
 
 	
@@ -88,14 +61,9 @@ class SoundMachine implements LineListener {
 	 */
 	public void playSound(Boolean success) {
         if (success.equals(Constant.SUCCESS)) {
-        	try {
-				PlaySuccess();
-			} catch (LineUnavailableException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        	playSuccess();
         } else {
-        	PlayFail();
+        	playFail();
         }
 	}
 	

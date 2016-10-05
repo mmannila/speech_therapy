@@ -1,16 +1,11 @@
 package org.talterapeut_app;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.annotation.WebServlet;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -57,7 +52,7 @@ public class TerapeutUI extends UI {
     Button playPhraseButton;
     
     SoundMachine soundMachine;
-
+    Audio audio;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -85,7 +80,11 @@ public class TerapeutUI extends UI {
         gridLayout.addComponent(playPhraseButton, 2, 1);
         gridLayout.addComponent(dragDropArea_B, 1, 2);
         gridLayout.addComponent(resetButton, 2, 2);
+        gridLayout.addComponent(audio); // where to add, actually?
 
+        soundMachine.playSound(true); // FIXME testing...
+        soundMachine.playSound(false); // FIXME testing...
+		
         gridLayout.setComponentAlignment(folderButton, Alignment.TOP_CENTER);
 
         gridLayout.setSizeFull();
@@ -144,11 +143,14 @@ public class TerapeutUI extends UI {
      * Could throw Exceptions to master initializer to handle, but does not.
      */
     private void initSoundMachine() {
-    	try {
-			soundMachine = new SoundMachine(basepath + Constant.AUDIO_BASE_PATH);
-		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-			e1.printStackTrace();
-		}
+		audio = new Audio(); // do now write a title text, it risks the web page layout 
+		audio.setAutoplay(false);
+        audio.setShowControls(false);
+        audio.setHtmlContentAllowed(false);
+        audio.setStyleName("invisible");
+        audio.setAltText("Can't play media");
+
+    	soundMachine = new SoundMachine(audio, basepath + Constant.AUDIO_BASE_PATH);
     }
 
     // button used to randomize
@@ -198,9 +200,8 @@ public class TerapeutUI extends UI {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
                 
-                // TODO always plays success!
-                // if (isAnswerCorrect(Objects)) // TODO implementation missing
-                soundMachine.playSound(Constant.SUCCESS);
+                // soundMachine.playSound(isAnswerCorrect(Objects));
+                soundMachine.playSound(Objects.equals(tmp,"Subject Verb Object")); // FIXME
 
             }
             else
@@ -280,7 +281,7 @@ public class TerapeutUI extends UI {
         verbButton.setWidth("100%");
         folderWindowLayout.addComponent(verbButton);
 
-
+        // Possible problem?! The static method getCurrent() from the type UI should be accessed in a static way --Jussi
         getUI().getCurrent().addWindow(window);
 
     }
