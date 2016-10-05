@@ -26,16 +26,18 @@ public class SoundButton extends Button {
                 AppView.setDragDropLabel(tmp);
 
                 // test if the answer was correct or not
-                if (Objects.equals(tmp, "Subject Verb Object")) {
+                if ((Objects.equals(tmp, "Subject Verb Object") && AppView
+                        .getPhraseLength() == 3)
+                        || (Objects.equals(tmp, "Subject Verb") && AppView
+                                .getPhraseLength() == 2)) {
                     new Notification("Correct!").show(Page.getCurrent());
                 } else {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
 
-            }
-
-            else
+            } else {
                 AppView.setDragDropLabel("This DnD layout is empty!");
+            }
         });
     }
 }
