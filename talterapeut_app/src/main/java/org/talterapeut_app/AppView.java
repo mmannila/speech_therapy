@@ -1,26 +1,15 @@
 package org.talterapeut_app;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.talterapeut_app.appview.DragDropLayouts;
-import org.talterapeut_app.appview.RandomButton;
-import org.talterapeut_app.appview.ResetButton;
-import org.talterapeut_app.appview.SoundButton;
-import org.talterapeut_app.appview.WordFolder;
-import org.talterapeut_app.appview.WordLengthLayout;
-import org.talterapeut_app.model.ImageLoader;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinService;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.talterapeut_app.appview.*;
+import org.talterapeut_app.model.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AppView extends VerticalLayout implements View {
     final private static String basepath = VaadinService.getCurrent()
@@ -98,7 +87,7 @@ public class AppView extends VerticalLayout implements View {
         image.setWidth("100px");
         image.setHeight("100px");
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < phrase_length; i++) {
             image = setOfImages.get(i);
             image.setWidth("100px");
             image.setHeight("100px");
@@ -129,13 +118,15 @@ public class AppView extends VerticalLayout implements View {
         imageOfVerb.setDescription("Verb");
         setOfImages.add(imageOfVerb);
 
-        // Object
-        ArrayList<Image> Objects = ImageLoader.loadImages(basepath
-                + "/WEB-INF/objekt/");
-        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
-        Image imageOfObject = Objects.get(randomIndex);
-        imageOfObject.setDescription("Object");
-        setOfImages.add(imageOfObject);
+        // Object (if the three word option is chosen)
+        if (phrase_length == 3) {
+            ArrayList<Image> Objects = ImageLoader.loadImages(basepath
+                    + "/WEB-INF/objekt/");
+            randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+            Image imageOfObject = Objects.get(randomIndex);
+            imageOfObject.setDescription("Object");
+            setOfImages.add(imageOfObject);
+        }
 
         Collections.shuffle(setOfImages);
         reset();
