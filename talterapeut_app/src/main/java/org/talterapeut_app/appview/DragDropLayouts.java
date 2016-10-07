@@ -2,40 +2,24 @@ package org.talterapeut_app.appview;
 
 import java.util.ArrayList;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
-import fi.jasoft.dragdroplayouts.DDCssLayout;
+import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultCssLayoutDropHandler;
+import fi.jasoft.dragdroplayouts.drophandlers.DefaultGridLayoutDropHandler;
 
-public class DragDropLayouts extends VerticalLayout {
-    DDCssLayout dragDropAreaTop;
-    DDCssLayout dragDropAreaBottom;
-    Label phraseLabel;
+public class DragDropLayouts extends DDGridLayout {
+    Label phraseLabel; // TODO currently doesn't do anything
 
     public DragDropLayouts() {
-        dragDropAreaTop = new DDCssLayout();
-        dragDropAreaTop.setDragMode(LayoutDragMode.CLONE);
-        dragDropAreaTop.setDropHandler(new DefaultCssLayoutDropHandler());
-        dragDropAreaTop.setSizeFull();
-
-        dragDropAreaBottom = new DDCssLayout();
-        dragDropAreaBottom.setDragMode(LayoutDragMode.CLONE);
-        dragDropAreaBottom.setDropHandler(new DefaultCssLayoutDropHandler());
-        dragDropAreaBottom.setSizeFull();
+        setRows(2);
+        setColumns(3);
+        setDragMode(LayoutDragMode.CLONE);
+        setDropHandler(new DefaultGridLayoutDropHandler());
 
         phraseLabel = new Label();
 
         setSizeFull();
-        addComponent(dragDropAreaTop);
-        addComponent(phraseLabel);
-        addComponent(dragDropAreaBottom);
-
-        setExpandRatio(dragDropAreaTop, 1);
-        setExpandRatio(dragDropAreaBottom, 1);
-        setExpandRatio(phraseLabel, 0);
     }
 
     public void setPhraseLabel(String str) {
@@ -43,21 +27,29 @@ public class DragDropLayouts extends VerticalLayout {
     }
 
     public void resetDragDropArea() {
-        dragDropAreaTop.removeAllComponents();
-        dragDropAreaBottom.removeAllComponents();
+        removeAllComponents();
         phraseLabel.setValue("");
     }
 
     public void addPicture(Component n) {
-        dragDropAreaBottom.addComponent(n);
+        for (int i = 0; i < 3; i++) {
+            // tests if cell is empty
+            if (getComponent(i, 1) == null ) {
+                addComponent(n, i, 1);
+                n.setWidth("70%");
+                n.setHeight("70%");
+                setComponentAlignment(n, Alignment.MIDDLE_CENTER);
+                break;
+            }
+        }
     }
 
     public ArrayList<Component> getTopComponents() {
         ArrayList<Component> tmp = new ArrayList<Component>();
-        int len = dragDropAreaTop.getComponentCount();
+        int len = getColumns();
 
         for (int i = 0; i < len; i++) {
-            tmp.add(dragDropAreaTop.getComponent(i));
+            tmp.add(getComponent(i, 0));
         }
         return tmp;
     }
