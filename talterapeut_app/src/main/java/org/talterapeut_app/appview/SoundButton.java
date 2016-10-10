@@ -18,18 +18,26 @@ public class SoundButton extends Button {
             ArrayList<Component> list = AppView.getDragDropComponents();
 
             int length = list.size();
+            int phrase_length = AppView.getPhraseLength();
+            String tmp = "";
             if (length > 0) {
-                String tmp = list.get(0).getDescription();
-                for (int i = 1; i < length; i++) {
-                    tmp += " " + list.get(i).getDescription();
+                if (list.get(0) != null) {
+                    tmp = list.get(0).getDescription();
+                } else {
+                    tmp = "___";
+                }
+                for (int i = 1; i < phrase_length; i++) {
+                    if (list.get(i) != null) {
+                        tmp += " " + list.get(i).getDescription();
+                    } else {
+                        tmp += " ___";
+                    }
                 }
                 AppView.setDragDropLabel(tmp);
 
                 // test if the answer was correct or not
-                if ((Objects.equals(tmp, "Subject Verb Object") && AppView
-                        .getPhraseLength() == 3)
-                        || (Objects.equals(tmp, "Subject Verb") && AppView
-                                .getPhraseLength() == 2)) {
+                if ((Objects.equals(tmp, "Subject Verb Object") && phrase_length == 3)
+                        || (Objects.equals(tmp, "Subject Verb") && phrase_length == 2)) {
                     new Notification("Correct!").show(Page.getCurrent());
                 } else {
                     new Notification("Incorrect").show(Page.getCurrent());

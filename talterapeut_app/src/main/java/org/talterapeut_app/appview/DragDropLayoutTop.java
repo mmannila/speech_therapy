@@ -5,34 +5,22 @@ import java.util.ArrayList;
 import org.talterapeut_app.AppView;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import fi.jasoft.dragdroplayouts.DDPanel;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
-public class DragDropLayouts extends VerticalLayout {
+public class DragDropLayoutTop extends VerticalLayout {
     ArrayList<DDPanel> topPanels;
-    ArrayList<DDPanel> bottomPanels;
-    HorizontalLayout dragDropAreaTop;
-    HorizontalLayout dragDropAreaBottom;
-    // CssLayout dragDropAreaTop;
-    // CssLayout dragDropAreaBottom;
+    CssLayout dragDropAreaTop;
     Label phraseLabel;
-    int add_index;
 
-    public DragDropLayouts() {
+    public DragDropLayoutTop() {
         topPanels = new ArrayList<DDPanel>();
-        bottomPanels = new ArrayList<DDPanel>();
-
-        dragDropAreaTop = new HorizontalLayout();
-        // dragDropAreaTop = new CssLayout();
-        // dragDropAreaTop.setSizeFull();
-
-        dragDropAreaBottom = new HorizontalLayout();
-        // dragDropAreaBottom = new CssLayout();
-        // dragDropAreaBottom.setSizeFull();
+        dragDropAreaTop = new CssLayout();
+        phraseLabel = new Label();
 
         for (int i = 0; i < 3; i++) {
             DDPanel top = new DDPanel();
@@ -42,25 +30,14 @@ public class DragDropLayouts extends VerticalLayout {
             top.setDropHandler(new SwapPanelDropHandler());
             topPanels.add(top);
             dragDropAreaTop.addComponent(topPanels.get(i));
-
-            DDPanel bottom = new DDPanel();
-            bottom.setWidth("125px");
-            bottom.setHeight("125px");
-            bottom.setDragMode(LayoutDragMode.CLONE);
-            bottom.setDropHandler(new SwapPanelDropHandler());
-            bottomPanels.add(bottom);
-            dragDropAreaTop.addComponent(bottomPanels.get(i));
         }
 
-        phraseLabel = new Label();
-
         setSizeFull();
+        dragDropAreaTop.setSizeFull();
+        phraseLabel.setSizeFull();
         addComponent(dragDropAreaTop);
         addComponent(phraseLabel);
-        addComponent(dragDropAreaBottom);
-
         setExpandRatio(dragDropAreaTop, 1);
-        setExpandRatio(dragDropAreaBottom, 1);
         setExpandRatio(phraseLabel, 1);
     }
 
@@ -72,29 +49,18 @@ public class DragDropLayouts extends VerticalLayout {
         int len = AppView.getPhraseLength();
         for (int i = 0; i < topPanels.size(); i++) {
             topPanels.get(i).setContent(null);
-            bottomPanels.get(i).setContent(null);
 
             if (i >= len) {
                 topPanels.get(i).setVisible(false);
-                bottomPanels.get(i).setVisible(false);
             } else {
                 topPanels.get(i).setVisible(true);
-                bottomPanels.get(i).setVisible(true);
             }
 
         }
-        phraseLabel.setValue("");
-        add_index = 0;
+        phraseLabel.setValue("HOWDY");
     }
 
-    public void addPicture(Component n) {
-        if (add_index < AppView.getPhraseLength()) {
-            bottomPanels.get(add_index).setContent(n);
-            add_index++;
-        }
-    }
-
-    public ArrayList<Component> getTopComponents() {
+    public ArrayList<Component> getComponents() {
         ArrayList<Component> tmp = new ArrayList<Component>();
         int len = dragDropAreaTop.getComponentCount();
 
@@ -103,5 +69,4 @@ public class DragDropLayouts extends VerticalLayout {
         }
         return tmp;
     }
-
 }

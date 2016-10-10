@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.talterapeut_app.appview.DragDropLayouts;
+import org.talterapeut_app.appview.DragDropLayoutBottom;
+import org.talterapeut_app.appview.DragDropLayoutTop;
 import org.talterapeut_app.appview.RandomButton;
 import org.talterapeut_app.appview.ResetButton;
 import org.talterapeut_app.appview.SoundButton;
@@ -33,7 +34,9 @@ public class AppView extends VerticalLayout implements View {
     final GridLayout gridLayout = new GridLayout(3, 3);
 
     private WordLengthLayout wordSelectLayout;
-    private static DragDropLayouts dragDropLayouts;
+    // private static DragDropLayouts dragDropLayouts;
+    private static DragDropLayoutTop dragDropLayoutsTop;
+    private static DragDropLayoutBottom dragDropLayoutsBottom;
 
     private WordFolder folderButton;
     private RandomButton randomButton;
@@ -45,7 +48,9 @@ public class AppView extends VerticalLayout implements View {
 
         wordSelectLayout = new WordLengthLayout();
         folderButton = new WordFolder();
-        dragDropLayouts = new DragDropLayouts();
+        // dragDropLayouts = new DragDropLayouts();
+        dragDropLayoutsTop = new DragDropLayoutTop();
+        dragDropLayoutsBottom = new DragDropLayoutBottom();
         randomButton = new RandomButton();
         playPhraseButton = new SoundButton();
         resetButton = new ResetButton();
@@ -54,7 +59,9 @@ public class AppView extends VerticalLayout implements View {
         gridLayout.addComponent(wordSelectLayout, 0, 0);
         gridLayout.addComponent(folderButton, 1, 0);
         gridLayout.addComponent(randomButton, 2, 0);
-        gridLayout.addComponent(dragDropLayouts, 1, 1, 1, 2);
+        // gridLayout.addComponent(dragDropLayouts, 1, 1, 1, 2);
+        gridLayout.addComponent(dragDropLayoutsTop, 1, 1);
+        gridLayout.addComponent(dragDropLayoutsBottom, 1, 2);
         gridLayout.addComponent(playPhraseButton, 2, 1);
         gridLayout.addComponent(resetButton, 2, 2);
 
@@ -74,25 +81,11 @@ public class AppView extends VerticalLayout implements View {
         setExpandRatio(menu, 0);
     }
 
-    // // button which calls the reset method
-    // private void initRandomButton() {
-    // resetButton = new Button("Random");
-    // resetButton.addClickListener(e -> {
-    // reset();
-    // });
-    // }
-    //
-    // // button which calls the reset method
-    // private void initResetButton() {
-    // resetButton = new Button("Reset");
-    // resetButton.addClickListener(e -> {
-    // reset();
-    // });
-    // }
-
     // resets the DnD layouts and the phrase label
     public static void reset() {
-        dragDropLayouts.resetDragDropArea();
+        // dragDropLayouts.resetDragDropArea();
+        dragDropLayoutsTop.resetDragDropArea();
+        dragDropLayoutsBottom.resetDragDropArea();
 
         Image image = setOfImages.get(0);
         image.setWidth("100px");
@@ -102,13 +95,15 @@ public class AppView extends VerticalLayout implements View {
             image = setOfImages.get(i);
             image.setWidth("100px");
             image.setHeight("100px");
-            dragDropLayouts.addPicture(image);
+            // dragDropLayouts.addPicture(image);
+            dragDropLayoutsBottom.addPicture(image);
         }
     }
 
     // Loads new set of images
     public static void randomize() {
-        dragDropLayouts.setPhraseLabel("");
+        // dragDropLayouts.setPhraseLabel("");
+        dragDropLayoutsTop.setPhraseLabel("");
 
         int randomIndex;
         setOfImages.clear();
@@ -154,11 +149,13 @@ public class AppView extends VerticalLayout implements View {
     }
 
     public static ArrayList<Component> getDragDropComponents() {
-        return dragDropLayouts.getTopComponents();
+        return dragDropLayoutsTop.getComponents();
+        // return dragDropLayouts.getTopComponents();
     }
 
     public static void setDragDropLabel(String str) {
-        dragDropLayouts.setPhraseLabel(str);
+        dragDropLayoutsTop.setPhraseLabel(str);
+        // dragDropLayouts.setPhraseLabel(str);
     }
 
     @Override
