@@ -1,15 +1,16 @@
 package org.talterapeut_app;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
+
+import javax.servlet.annotation.WebServlet;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser
@@ -38,7 +39,8 @@ public class TerapeutUI extends UI {
         navigator = new Navigator(this, this);
         navigator.addView(APPVIEW, new AppView());
         navigator.addView(PROFILEVIEW, new ProfileView());
-        navigator.navigateTo(APPVIEW);
+        navigator.addView(LOGINVIEW, new LoginView());
+        navigator.navigateTo(LOGINVIEW);
     }
 
     public static MenuBar getMenuBar() {
@@ -57,9 +59,16 @@ public class TerapeutUI extends UI {
                     navigator.navigateTo(PROFILEVIEW);
                 }
 
+                if (selectedItem.getText().equals("Log Out")) {
+                    navigator.navigateTo(LOGINVIEW);
+                    getCurrent().close();
+                    Page.getCurrent().reload();
+                }
+
                 if (previous != null) {
                     previous.setStyleName(null);
                 }
+
                 selectedItem.setStyleName("highlight");
                 previous = selectedItem;
             }
