@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 import java.sql.*;
 
 /**
- * Methods used for accessing the login database by the LoginDAO class.
- * Created by daniel on 10/6/16.
+ * Methods for authentication and updating the login_users database.
+ *
  */
 
 public abstract class DataAccess {
