@@ -1,15 +1,27 @@
 package org.talterapeut_app;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.VaadinService;
-import com.vaadin.ui.*;
-import org.talterapeut_app.appview.*;
-import org.talterapeut_app.model.ImageLoader;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
+
+import org.talterapeut_app.appview.DragDropLayoutBottom;
+import org.talterapeut_app.appview.DragDropLayoutTop;
+import org.talterapeut_app.appview.RandomButton;
+import org.talterapeut_app.appview.ResetButton;
+import org.talterapeut_app.appview.SoundButton;
+import org.talterapeut_app.appview.WordFolder;
+import org.talterapeut_app.appview.WordLengthLayout;
+import org.talterapeut_app.model.ImageLoader;
+
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.VaadinService;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.VerticalLayout;
 
 public class AppView extends VerticalLayout implements View {
     final private static String basepath = VaadinService.getCurrent()
@@ -22,7 +34,9 @@ public class AppView extends VerticalLayout implements View {
     final GridLayout gridLayout = new GridLayout(3, 3);
 
     private WordLengthLayout wordSelectLayout;
-    private static DragDropLayouts dragDropLayouts;
+    // private static DragDropLayouts dragDropLayouts;
+    private static DragDropLayoutTop dragDropLayoutsTop;
+    private static DragDropLayoutBottom dragDropLayoutsBottom;
 
     private WordFolder folderButton;
     private RandomButton randomButton;
@@ -34,7 +48,9 @@ public class AppView extends VerticalLayout implements View {
 
         wordSelectLayout = new WordLengthLayout();
         folderButton = new WordFolder();
-        dragDropLayouts = new DragDropLayouts();
+        // dragDropLayouts = new DragDropLayouts();
+        dragDropLayoutsTop = new DragDropLayoutTop();
+        dragDropLayoutsBottom = new DragDropLayoutBottom();
         randomButton = new RandomButton();
         playPhraseButton = new SoundButton();
         resetButton = new ResetButton();
@@ -43,7 +59,9 @@ public class AppView extends VerticalLayout implements View {
         gridLayout.addComponent(wordSelectLayout, 0, 0);
         gridLayout.addComponent(folderButton, 1, 0);
         gridLayout.addComponent(randomButton, 2, 0);
-        gridLayout.addComponent(dragDropLayouts, 1, 1, 1, 2);
+        // gridLayout.addComponent(dragDropLayouts, 1, 1, 1, 2);
+        gridLayout.addComponent(dragDropLayoutsTop, 1, 1);
+        gridLayout.addComponent(dragDropLayoutsBottom, 1, 2);
         gridLayout.addComponent(playPhraseButton, 2, 1);
         gridLayout.addComponent(resetButton, 2, 2);
 
@@ -63,41 +81,29 @@ public class AppView extends VerticalLayout implements View {
         setExpandRatio(menu, 0);
     }
 
-    // // button which calls the reset method
-    // private void initRandomButton() {
-    // resetButton = new Button("Random");
-    // resetButton.addClickListener(e -> {
-    // reset();
-    // });
-    // }
-    //
-    // // button which calls the reset method
-    // private void initResetButton() {
-    // resetButton = new Button("Reset");
-    // resetButton.addClickListener(e -> {
-    // reset();
-    // });
-    // }
-
     // resets the DnD layouts and the phrase label
     public static void reset() {
-        dragDropLayouts.resetDragDropArea();
+        // dragDropLayouts.resetDragDropArea();
+        dragDropLayoutsTop.resetDragDropArea();
+        dragDropLayoutsBottom.resetDragDropArea();
 
         Image image = setOfImages.get(0);
         image.setWidth("100px");
         image.setHeight("100px");
 
-        for (int i = 0; i < phrase_length; i++) {
+        for (int i = 0; i < 3; i++) {
             image = setOfImages.get(i);
             image.setWidth("100px");
             image.setHeight("100px");
-            dragDropLayouts.addPicture(image);
+            // dragDropLayouts.addPicture(image);
+            dragDropLayoutsBottom.addPicture(image);
         }
     }
 
     // Loads new set of images
     public static void randomize() {
-        dragDropLayouts.setPhraseLabel("");
+        // dragDropLayouts.setPhraseLabel("");
+        dragDropLayoutsTop.setPhraseLabel("");
 
         int randomIndex;
         setOfImages.clear();
@@ -118,15 +124,13 @@ public class AppView extends VerticalLayout implements View {
         imageOfVerb.setDescription("Verb");
         setOfImages.add(imageOfVerb);
 
-        // Object (if the three word option is chosen)
-        if (phrase_length == 3) {
-            ArrayList<Image> Objects = ImageLoader.loadImages(basepath
-                    + "/WEB-INF/objekt/");
-            randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
-            Image imageOfObject = Objects.get(randomIndex);
-            imageOfObject.setDescription("Object");
-            setOfImages.add(imageOfObject);
-        }
+        // Object
+        ArrayList<Image> Objects = ImageLoader.loadImages(basepath
+                + "/WEB-INF/objekt/");
+        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+        Image imageOfObject = Objects.get(randomIndex);
+        imageOfObject.setDescription("Object");
+        setOfImages.add(imageOfObject);
 
         Collections.shuffle(setOfImages);
         reset();
@@ -145,11 +149,13 @@ public class AppView extends VerticalLayout implements View {
     }
 
     public static ArrayList<Component> getDragDropComponents() {
-        return dragDropLayouts.getTopComponents();
+        return dragDropLayoutsTop.getComponents();
+        // return dragDropLayouts.getTopComponents();
     }
 
     public static void setDragDropLabel(String str) {
-        dragDropLayouts.setPhraseLabel(str);
+        dragDropLayoutsTop.setPhraseLabel(str);
+        // dragDropLayouts.setPhraseLabel(str);
     }
 
     @Override
