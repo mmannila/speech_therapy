@@ -82,9 +82,6 @@ public class TerapeutUI extends UI {
         gridLayout.addComponent(resetButton, 2, 2);
         gridLayout.addComponent(audio); // where to add, actually?
 
-        soundMachine.playSound(true); // FIXME testing...
-        soundMachine.playSound(false); // FIXME testing...
-		
         gridLayout.setComponentAlignment(folderButton, Alignment.TOP_CENTER);
 
         gridLayout.setSizeFull();
