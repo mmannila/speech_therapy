@@ -14,6 +14,7 @@ public abstract class DataAccess {
 
     private Connection conn = null;
     private PreparedStatement statement = null;
+    private ResultSet rs = null;
 
     protected DataAccess() throws SQLException, ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
@@ -24,7 +25,6 @@ public abstract class DataAccess {
     }
 
     ResultSet GetUserData(String username, String password) throws SQLException {
-        ResultSet rs = null;
 
         try {
 
@@ -45,9 +45,16 @@ public abstract class DataAccess {
     boolean RegisterUserData(String username, String password) throws SQLException {
 
         boolean updateCheck = false;
-        ResultSet rs = GetUserData(username, password);
+        boolean userExists = false;
+        rs = GetUserData(username, password);
 
-        if (rs == null) {
+        while(rs.next()) {
+            if (username.equals(rs.getString("userName")))
+                userExists = true;
+            break;
+        }
+
+        if (!userExists) {
 
             try {
 
@@ -64,6 +71,7 @@ public abstract class DataAccess {
                 e.printStackTrace();
 
             }
+
         }
 
         return updateCheck;
