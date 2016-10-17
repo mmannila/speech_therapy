@@ -27,8 +27,6 @@ public class AppView extends VerticalLayout implements View {
     final private static String basepath = VaadinService.getCurrent()
             .getBaseDirectory().getAbsolutePath();
     static int phrase_length = 3; // the current phrase length (or no. of words)
-    ArrayList correct_order = new ArrayList(); // stores the correct order of
-                                               // the current phrase
     static ArrayList<Image> setOfImages = new ArrayList<Image>();
 
     final GridLayout gridLayout = new GridLayout(3, 3);
@@ -40,6 +38,7 @@ public class AppView extends VerticalLayout implements View {
     private RandomButton randomButton;
     private ResetButton resetButton;
     private SoundButton playPhraseButton;
+    private Audio audio;
     public static SoundMachine soundMachine;
 
     public AppView() {
@@ -61,6 +60,7 @@ public class AppView extends VerticalLayout implements View {
         gridLayout.addComponent(dragDropLayouts, 1, 1, 1, 2);
         gridLayout.addComponent(playPhraseButton, 2, 1);
         gridLayout.addComponent(resetButton, 2, 2);
+        gridLayout.addComponent(audio); // where to add, actually?
 
         gridLayout.setComponentAlignment(folderButton, Alignment.TOP_CENTER);
 
@@ -81,9 +81,11 @@ public class AppView extends VerticalLayout implements View {
     /**
      * Initializes audio. 
      * Could throw Exceptions to master initializer to handle, but does not.
+     * 
+     * TODO not accomodated to the nice new code structure (need to play sound NOW)
      */
-    private static void initSoundMachine() {
-    	Audio audio = new Audio(); // do not write a title text, it risks the web page layout 
+    private void initSoundMachine() {
+    	audio = new Audio(); // do not write a title text, it risks the web page layout 
     	audio.setAutoplay(false);
         audio.setShowControls(false);
         audio.setHtmlContentAllowed(false);
