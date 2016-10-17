@@ -6,7 +6,9 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Audio;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
@@ -33,14 +35,14 @@ public class TerapeutUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         getPage().setTitle("Speech Therapy App (WIP)");
-
+        
         // sets up the navigator and views before jumping to the app view
         navigator = new Navigator(this, this);
         navigator.addView(APPVIEW, new AppView());
         navigator.addView(PROFILEVIEW, new ProfileView());
         navigator.navigateTo(APPVIEW);
     }
-
+    
     public static MenuBar getMenuBar() {
         MenuBar tmp = new MenuBar();
 

@@ -16,6 +16,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Audio;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
@@ -39,9 +40,12 @@ public class AppView extends VerticalLayout implements View {
     private RandomButton randomButton;
     private ResetButton resetButton;
     private SoundButton playPhraseButton;
+    public static SoundMachine soundMachine;
 
     public AppView() {
         setSizeFull();
+        
+        initSoundMachine();
 
         wordSelectLayout = new WordLengthLayout();
         folderButton = new WordFolder();
@@ -73,6 +77,23 @@ public class AppView extends VerticalLayout implements View {
         setExpandRatio(gridLayout, 1);
         setExpandRatio(menu, 0);
     }
+    
+    /**
+     * Initializes audio. 
+     * Could throw Exceptions to master initializer to handle, but does not.
+     */
+    private static void initSoundMachine() {
+    	Audio audio = new Audio(); // do not write a title text, it risks the web page layout 
+    	audio.setAutoplay(false);
+        audio.setShowControls(false);
+        audio.setHtmlContentAllowed(false);
+        audio.setStyleName("invisible");
+        audio.setAltText("Can't play media");
+        
+ 		soundMachine = new SoundMachine(audio, basepath + Constant.AUDIO_BASE_PATH);
+    }
+
+
 
     // // button which calls the reset method
     // private void initRandomButton() {
