@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.sql.*;
 
 /**
- * Methods for authentication and updating the login_users database.
+ * Methods for authentication and updating the login database.
  *
  */
 
@@ -14,23 +14,25 @@ public abstract class DataAccess {
 
     private Connection conn = null;
     private PreparedStatement statement = null;
-    private ResultSet rs = null;
 
     protected DataAccess() throws SQLException, ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString() + "/src/main/java/org/talterapeut_app/data/login_users.db";
+        String s = currentRelativePath.toAbsolutePath().toString() + "/src/main/java/org/talterapeut_app/data/login.db";
         String path = "jdbc:sqlite:" + s;
         conn = DriverManager.getConnection(path);
     }
 
-    ResultSet GetUserData(String username, String password) throws SQLException {
+    ResultSet LoginValidator(String email, String password) {
+        ResultSet rs = null;
 
         try {
 
-            statement = conn.prepareStatement("SELECT * FROM login_users WHERE userName = ? AND userPass = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
+            statement = conn.prepareStatement("SELECT userEmail, userName, userPass FROM users " +
+                    "WHERE userPass = ? AND (userEmail = ? OR userName = ?);");
+            statement.setString(1, password);
+            statement.setString(2, email);
+            statement.setString(3, email);
             rs = statement.executeQuery();
 
         } catch (Exception e) {
@@ -42,39 +44,22 @@ public abstract class DataAccess {
         return rs;
     }
 
-    boolean RegisterUserData(String username, String password) throws SQLException {
+    boolean UpdateUserData(String email, String username, String password) throws SQLException {
 
-        boolean updateCheck = false;
-        boolean userExists = false;
-        rs = GetUserData(username, password);
+        try {
+            statement = conn.prepareStatement("INSERT INTO users (userEmail, userName, userPass) VALUES (?, ?, ?);");
+            statement.setString(1, email);
+            statement.setString(2, username);
+            statement.setString(3, password);
+            statement.executeUpdate();
 
-        while(rs.next()) {
-            if (username.equals(rs.getString("userName")))
-                userExists = true;
-            break;
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        if (!userExists) {
-
-            try {
-
-                statement = conn.prepareStatement("INSERT INTO login_users (userName, userPass) values (?, ?)");
-                statement.setString(1, username);
-                statement.setString(2, password);
-                statement.executeUpdate();
-
-                updateCheck = true;
-
-            } catch (SQLException e) {
-
-                updateCheck = false;
-                e.printStackTrace();
-
-            }
-
-        }
-
-        return updateCheck;
+        return false;
     }
 
     void CloseConnection() throws SQLException {
