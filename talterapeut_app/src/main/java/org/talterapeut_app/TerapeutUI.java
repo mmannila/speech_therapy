@@ -6,6 +6,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
@@ -61,8 +62,8 @@ public class TerapeutUI extends UI {
 
                 if (selectedItem.getText().equals("Log Out")) {
                     navigator.navigateTo(LOGINVIEW);
-                    getCurrent().close();
-                    Page.getCurrent().reload();
+                    Page.getCurrent().setLocation("/");
+                    VaadinSession.getCurrent().close();
                 }
 
                 if (previous != null) {
@@ -72,7 +73,6 @@ public class TerapeutUI extends UI {
                 selectedItem.setStyleName("highlight");
                 previous = selectedItem;
             }
-
         };
 
         tmp.addItem("App", menuNav);
