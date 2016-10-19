@@ -2,17 +2,30 @@ package org.talterapeut_app.appview;
 
 import java.util.ArrayList;
 
+import com.vaadin.ui.*;
 import org.talterapeut_app.AppView;
 import org.talterapeut_app.model.ImageLoader;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import java.util.Iterator;
 
-public class WordFolder extends Button {
+
+public class WordFolder extends Button implements Button.ClickListener {
+
+    private VerticalLayout imageCol1, imageCol2, imageCol3;
+    private HorizontalLayout columnHolder;
+    private Image phraseSubjImage, phraseVerbImage, phraseObjImage;
+    private Button subjButton, verbButton, objButton;
+    private Button btn1, btn2, btn3;
+    private Panel imagePanel;
+
+    private Category selectedCategory;
+
+    private enum Category {
+        SUBJECT,
+        VERB,
+        OBJECT
+    }
+
 
     public WordFolder() {
         setCaption("Word Folder");
@@ -25,55 +38,256 @@ public class WordFolder extends Button {
 
         Window window = new Window("Image Selection");
         window.setModal(true);
-        window.setWidth(300.0f, Unit.PIXELS);
+        window.setWidth(600.0f, Unit.PIXELS);
+        window.setHeight(660.0f, Unit.PIXELS);
         window.setResizable(false);
         window.center();
 
-        VerticalLayout folderWindowLayout = new VerticalLayout();
-        folderWindowLayout.setMargin(true);
+        // VERTICAL HOLDS ALL CONTENT (Tried grid without visual success)
+        VerticalLayout contentLayout = new VerticalLayout();
+        window.setContent(contentLayout);
 
-        window.setContent(folderWindowLayout);
+        //HORIZONTAL LAYOUT CONTAINS BUTTONS + PANEL
+        HorizontalLayout midContent = new HorizontalLayout();
+        contentLayout.addComponent(midContent);
 
-        Button subjectButton = new Button("Subject");
-        subjectButton.setWidth("100%");
-        folderWindowLayout.addComponent(subjectButton);
+        // BUTTONS FOR SUBJ/VERB/OBJ
+        // ADD TO VERTICAL LAYOUT FOR NOW
+        VerticalLayout buttonHolder = new VerticalLayout();
+        midContent.addComponent(buttonHolder);
 
-        Panel subjPanel = new Panel();
-        subjPanel.setHeight(130.0f, Unit.PIXELS);
-        subjPanel.setVisible(false);
+        subjButton = new Button("Subject");
+        subjButton.setWidth("100px");
+        subjButton.addClickListener(this);
+        verbButton = new Button("Verb");
+        verbButton.setWidth("100px");
+        verbButton.addClickListener(this);
+        objButton = new Button("Object");
+        objButton.setWidth("100px");
+        objButton.addClickListener(this);
 
-        VerticalLayout subjWindowLayout = new VerticalLayout();
-        subjPanel.setContent(subjWindowLayout);
-        folderWindowLayout.addComponent(subjPanel);
+        buttonHolder.addComponent(subjButton);
+        buttonHolder.addComponent(verbButton);
+        buttonHolder.addComponent(objButton);
+        buttonHolder.setComponentAlignment(subjButton, Alignment.MIDDLE_LEFT);
+        buttonHolder.setComponentAlignment(verbButton, Alignment.MIDDLE_LEFT);
+        buttonHolder.setComponentAlignment(objButton, Alignment.MIDDLE_LEFT);
 
-        // WORK IN PROGRESS
-        // Populate VerticalLayout within Panel (with scrollbar)
-        // Clear layout and disable Panel on re-click
-        subjectButton
-                .addClickListener(e -> {
 
-                    if (!subjPanel.isVisible()) {
-                        ArrayList<Image> subjectArrayList = ImageLoader
-                                .loadImages(AppView.getBasepath()
-                                        + "/WEB-INF/subjekt/");
-                        subjPanel.setVisible(true);
+        // VERTICAL COLUMNS FOR IMAGES
+        // PANEL HOLDS HORIZONTAL LAYOUT THAT CONTAINS 3 VERTICALS
+        imageCol1 = new VerticalLayout();
+        imageCol2 = new VerticalLayout();
+        imageCol3 = new VerticalLayout();
+        columnHolder = new HorizontalLayout();
+        columnHolder.addComponent(imageCol1);
+        columnHolder.addComponent(imageCol2);
+        columnHolder.addComponent(imageCol3);
+        imagePanel = new Panel();
+        imagePanel.setWidth(500.0f, Unit.PIXELS);
+        imagePanel.setHeight(400.0f, Unit.PIXELS);
+        imagePanel.setContent(columnHolder);
+        midContent.addComponent(imagePanel);
 
-                        for (Image img : subjectArrayList) {
-                            subjWindowLayout.addComponent(img);
-                            subjWindowLayout.setComponentAlignment(img,
-                                    Alignment.MIDDLE_CENTER);
-                        }
-                    } else {
-                        subjWindowLayout.removeAllComponents();
-                        subjPanel.setVisible(false);
-                    }
-                });
 
-        Button verbButton = new Button("Verb");
-        verbButton.setWidth("100%");
-        folderWindowLayout.addComponent(verbButton);
+        // SELECTED PHRASE TO GENERATE
+        HorizontalLayout phraseHolderLayout = new HorizontalLayout();
+        contentLayout.addComponent(phraseHolderLayout);
+        contentLayout.setComponentAlignment(phraseHolderLayout, Alignment.BOTTOM_CENTER);
+
+        phraseSubjImage = new Image();
+        phraseSubjImage.setWidth(160.0f, Unit.PIXELS);
+        phraseSubjImage.setHeight(160.0f, Unit.PIXELS);
+        phraseHolderLayout.addComponent(phraseSubjImage);
+
+        phraseVerbImage = new Image();
+        phraseVerbImage.setWidth(160.0f, Unit.PIXELS);
+        phraseVerbImage.setHeight(160.0f, Unit.PIXELS);
+        phraseHolderLayout.addComponent(phraseVerbImage);
+
+        phraseObjImage = new Image();
+        phraseObjImage.setWidth(160.0f, Unit.PIXELS);
+        phraseObjImage.setHeight(160.0f, Unit.PIXELS);
+        phraseHolderLayout.addComponent(phraseObjImage);
+        phraseObjImage.setVisible(false);
+
+
+        if (AppView.getPhraseLength() == 3) {
+            phraseObjImage.setVisible(true);
+        }
+
+        Button generatePhraseButton = new Button("Use this Phrase");
+        generatePhraseButton.setWidth(200.0f, Unit.PIXELS);
+        contentLayout.addComponent(generatePhraseButton);
+        contentLayout.setComponentAlignment(generatePhraseButton, Alignment.BOTTOM_CENTER);
+        generatePhraseButton.addClickListener(e -> {
+            Notification.show("THIS IS THE GENERATED PHRASE");
+            // ADD PHRASE TO APPVIEW
+            // CLOSE WINDOW
+        });
+
 
         getUI().getCurrent().addWindow(window);
+    }
 
+
+    private void resetImagePanel() {
+
+        imageCol1.removeAllComponents();
+        imageCol2.removeAllComponents();
+        imageCol3.removeAllComponents();
+    }
+
+    private void populateImagePanel(ArrayList<Image> al) {
+
+        Iterator<Image> iter = al.iterator();
+        System.out.println("Iterator size: " + al.size());
+
+        while (iter.hasNext()) {
+
+            if (iter.hasNext()) {
+
+                Image img1 = iter.next();
+                img1.setWidth(160.0f, Unit.PIXELS);
+                img1.setHeight(160.0f, Unit.PIXELS);
+                btn1 = new Button(img1.getSource());
+
+                // CHEESY ONCLICKLISTENER
+                btn1.addClickListener(e1 -> {
+
+                    switch (selectedCategory) {
+
+                        case SUBJECT:
+                            phraseSubjImage.setSource(img1.getSource());
+                            break;
+
+                        case VERB:
+                            phraseVerbImage.setSource(img1.getSource());
+                            break;
+
+                        case OBJECT:
+                            phraseObjImage.setSource(img1.getSource());
+                            break;
+                    }
+
+
+                });
+
+                btn1.addStyleName("img_button_col1");
+                btn1.setWidth(160.0f, Unit.PIXELS);
+                btn1.setHeight(160.0f, Unit.PIXELS);
+                btn1.addClickListener(this);
+                imageCol1.addComponent(btn1);
+                imageCol1.setComponentAlignment(btn1, Alignment.MIDDLE_CENTER);
+            }
+
+            if (iter.hasNext()) {
+
+                Image img2 = iter.next();
+                img2.setWidth(160.0f, Unit.PIXELS);
+                img2.setHeight(160.0f, Unit.PIXELS);
+                btn2 = new Button(img2.getSource());
+
+                // CHEESY ONCLICKLISTENER
+                btn2.addClickListener(e2 -> {
+
+                    switch (selectedCategory) {
+
+                        case SUBJECT:
+                            phraseSubjImage.setSource(img2.getSource());
+                            break;
+
+                        case VERB:
+                            phraseVerbImage.setSource(img2.getSource());
+                            break;
+
+                        case OBJECT:
+                            phraseObjImage.setSource(img2.getSource());
+                            break;
+                    }
+
+
+                });
+
+                btn2.addStyleName("img_button_col2");
+                btn2.setWidth(160.0f, Unit.PIXELS);
+                btn2.setHeight(160.0f, Unit.PIXELS);
+                btn2.addClickListener(this);
+                imageCol2.addComponent(btn2);
+                imageCol2.setComponentAlignment(btn2, Alignment.MIDDLE_CENTER);
+            }
+
+            if (iter.hasNext()) {
+
+                Image img3 = iter.next();
+                img3.setWidth(160.0f, Unit.PIXELS);
+                img3.setHeight(160.0f, Unit.PIXELS);
+                btn3 = new Button(img3.getSource());
+
+                // CHEESY ONCLICKLISTENER
+                btn3.addClickListener(e3 -> {
+
+                    switch (selectedCategory) {
+
+                        case SUBJECT:
+                            phraseSubjImage.setSource(img3.getSource());
+                            break;
+
+                        case VERB:
+                            phraseVerbImage.setSource(img3.getSource());
+                            break;
+
+                        case OBJECT:
+                            phraseObjImage.setSource(img3.getSource());
+                            break;
+                    }
+
+
+                });
+
+                btn3.addStyleName("img_button_col3");
+                btn3.setWidth(160.0f, Unit.PIXELS);
+                btn3.setHeight(160.0f, Unit.PIXELS);
+                btn3.addClickListener(this);
+                imageCol3.addComponent(btn3);
+                imageCol3.setComponentAlignment(btn3, Alignment.MIDDLE_CENTER);
+            }
+        }
+    }
+
+    @Override
+    public void buttonClick(ClickEvent clickEvent) {
+
+        if (clickEvent.getButton() == subjButton) {
+
+            selectedCategory = Category.SUBJECT;
+            resetImagePanel();
+            ArrayList<Image> subjArrayList = ImageLoader
+                    .loadImages(AppView.getBasepath()
+                            + "/WEB-INF/subjekt/");
+
+            populateImagePanel(subjArrayList);
+
+        } else if (clickEvent.getButton() == verbButton) {
+
+            selectedCategory = Category.VERB;
+            resetImagePanel();
+            ArrayList<Image> verbArrayList = ImageLoader
+                    .loadImages(AppView.getBasepath()
+                            + "/WEB-INF/verb/");
+
+            populateImagePanel(verbArrayList);
+
+        } else if (clickEvent.getButton() == objButton) {
+
+            selectedCategory = Category.OBJECT;
+            resetImagePanel();
+            ArrayList<Image> objArrayList = ImageLoader
+                    .loadImages(AppView.getBasepath()
+                            + "/WEB-INF/objekt/");
+
+            populateImagePanel(objArrayList);
+
+        }
     }
 }

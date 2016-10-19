@@ -34,7 +34,7 @@ public class TerapeutUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         getPage().setTitle("Speech Therapy App (WIP)");
-
+        
         // sets up the navigator and views before jumping to the app view
         navigator = new Navigator(this, this);
         navigator.addView(APPVIEW, new AppView());
@@ -42,7 +42,7 @@ public class TerapeutUI extends UI {
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.navigateTo(LOGINVIEW);
     }
-
+    
     public static MenuBar getMenuBar() {
         MenuBar tmp = new MenuBar();
 

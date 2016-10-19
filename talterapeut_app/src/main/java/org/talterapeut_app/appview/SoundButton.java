@@ -42,6 +42,9 @@ public class SoundButton extends Button {
                 } else {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
+                
+                // soundMachine.playSound(isAnswerCorrect(Objects)); // TODO
+                AppView.soundMachine.playSound(Objects.equals(tmp,"Subject Verb Object")); // FIXME
 
             } else {
                 AppView.setDragDropLabel("This DnD layout is empty!");

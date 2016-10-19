@@ -17,6 +17,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Audio;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
@@ -27,8 +28,6 @@ public class AppView extends VerticalLayout implements View {
     final private static String basepath = VaadinService.getCurrent()
             .getBaseDirectory().getAbsolutePath();
     static int phrase_length = 3; // the current phrase length (or no. of words)
-    ArrayList correct_order = new ArrayList(); // stores the correct order of
-                                               // the current phrase
     static ArrayList<Image> setOfImages = new ArrayList<Image>();
 
     final GridLayout gridLayout = new GridLayout(3, 3);
@@ -42,9 +41,13 @@ public class AppView extends VerticalLayout implements View {
     private RandomButton randomButton;
     private ResetButton resetButton;
     private SoundButton playPhraseButton;
+    private Audio audio;
+    public static SoundMachine soundMachine;
 
     public AppView() {
         setSizeFull();
+        
+        initSoundMachine();
 
         wordSelectLayout = new WordLengthLayout();
         folderButton = new WordFolder();
@@ -64,6 +67,7 @@ public class AppView extends VerticalLayout implements View {
         gridLayout.addComponent(dragDropLayoutsBottom, 1, 2);
         gridLayout.addComponent(playPhraseButton, 2, 1);
         gridLayout.addComponent(resetButton, 2, 2);
+        gridLayout.addComponent(audio); // where to add, actually?
 
         gridLayout.setComponentAlignment(folderButton, Alignment.TOP_CENTER);
 
@@ -80,6 +84,25 @@ public class AppView extends VerticalLayout implements View {
         setExpandRatio(gridLayout, 1);
         setExpandRatio(menu, 0);
     }
+    
+    /**
+     * Initializes audio. 
+     * Could throw Exceptions to master initializer to handle, but does not.
+     * 
+     * TODO not accomodated to the nice new code structure (need to play sound NOW)
+     */
+    private void initSoundMachine() {
+    	audio = new Audio(); // do not write a title text, it risks the web page layout 
+    	audio.setAutoplay(false);
+        audio.setShowControls(false);
+        audio.setHtmlContentAllowed(false);
+        audio.setStyleName("invisible");
+        audio.setAltText("Can't play media");
+        
+ 		soundMachine = new SoundMachine(audio, basepath + Constant.AUDIO_BASE_PATH);
+    }
+
+
 
     // resets the DnD layouts and the phrase label
     public static void reset() {
