@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-resources/gwt"/>
         <property name="context-root" value="talterapeut_app"/>
         <property name="java-output-path" value="/talterapeut_app/target/classes"/>
         <property name="component.exclusion.patterns" value="WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**"/>
