@@ -8,11 +8,13 @@ import org.talterapeut_app.loginview.LoginDAO;
 import java.sql.SQLException;
 
 /**
- * Created by daniel on 10/6/16.
+ * Loginview
  */
+
 public class LoginView extends VerticalLayout implements View {
 
     private PasswordField passwordField;
+    private TextField emailField;
     private TextField usernameField;
     private LoginDAO login;
 
@@ -27,10 +29,15 @@ public class LoginView extends VerticalLayout implements View {
         buttonLayout.setSpacing(true);
         buttonLayout.setMargin(true);
 
+        emailField = new TextField("E-post eller användarnamn:");
+        emailField.setInputPrompt("epost@adress.com");
+        emailField.setRequired(true);
+        emailField.setWidth("300");
+
         usernameField = new TextField("Användarnamn:");
-        usernameField.setInputPrompt("epost@adress.com");
         usernameField.setRequired(true);
         usernameField.setWidth("300");
+        usernameField.setVisible(false);
 
         passwordField = new PasswordField("Lösenord:");
         passwordField.setRequired(true);
@@ -47,7 +54,10 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
+        Button createUserButton = new Button("Skapa användare");
+
         Button registerButton = new Button("Registrera");
+        registerButton.setVisible(false);
         registerButton.addClickListener(register -> {
             try {
                 Register();
@@ -58,10 +68,18 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
-        buttonLayout.addComponents(loginButton, registerButton);
-        mainLayout.addComponents(usernameField, passwordField, buttonLayout);
+        createUserButton.addClickListener(create -> {
+            createUserButton.setVisible(false);
+            registerButton.setVisible(true);
+            usernameField.setVisible(true);
+            emailField.setCaption("E-post:");
+        });
+
+        buttonLayout.addComponents(loginButton, createUserButton, registerButton);
+        mainLayout.addComponents(emailField, usernameField, passwordField, buttonLayout);
 
         mainLayout.setComponentAlignment(buttonLayout, Alignment.MIDDLE_CENTER);
+        mainLayout.setComponentAlignment(emailField, Alignment.MIDDLE_CENTER);
         mainLayout.setComponentAlignment(usernameField, Alignment.MIDDLE_CENTER);
         mainLayout.setComponentAlignment(passwordField, Alignment.MIDDLE_CENTER);
 
@@ -69,9 +87,9 @@ public class LoginView extends VerticalLayout implements View {
     }
 
     private void Login() throws SQLException, ClassNotFoundException {
-        login = new LoginDAO(usernameField.getValue(), passwordField.getValue());
+        login = new LoginDAO(emailField.getValue(), passwordField.getValue());
 
-        if (login.Validation() && login.CheckUser()) {
+        if (login.CheckUser()) {
             TerapeutUI.navigator.navigateTo(TerapeutUI.APPVIEW);
         } else {
             Notification.show("Felaktigt användarnamn eller lösenord.");
@@ -79,22 +97,23 @@ public class LoginView extends VerticalLayout implements View {
     }
 
     private void Register() throws SQLException, ClassNotFoundException {
-        login = new LoginDAO(usernameField.getValue(), passwordField.getValue());
+        login = new LoginDAO(emailField.getValue(), usernameField.getValue(), passwordField.getValue());
 
         if (login.Validation() && login.CreateUser()) {
             Notification.show("Registreringen lyckades.");
 
         } else {
             Notification.show("Registreringen misslyckades.");
-            usernameField.clear();
+            emailField.clear();
             passwordField.clear();
-            usernameField.focus();
+            usernameField.clear();
+            emailField.focus();
         }
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        usernameField.focus();
+        emailField.focus();
     }
 }
 
