@@ -1,33 +1,45 @@
 package org.talterapeut_app.loginview;
 
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.server.VaadinSession;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Login Data Access Object
- * Created by daniel on 10/6/16.
  */
-
-//TODO add functionality for displaying a message when a username is taken.
-
 public class LoginDAO extends DataAccess {
-    private String username = null;
-    private String password = null;
+    private String userName = null;
+    private String userEmail = null;
+    private String userPassword = null;
+    private ResultSet rs = null;
 
-    public LoginDAO(String user, String pass) throws SQLException, ClassNotFoundException {
+    public LoginDAO(String email, String user, String pass) throws SQLException, ClassNotFoundException {
         super();
-        this.username = user;
-        this.password = pass;
+        this.userName = user;
+        this.userEmail = email;
+        this.userPassword = pass;
+    }
+
+    public LoginDAO(String email, String pass) throws SQLException, ClassNotFoundException {
+        super();
+        this.userEmail = email;
+        this.userPassword = pass;
     }
 
     public boolean CheckUser() throws SQLException {
-        ResultSet rs = GetUserData(username, password);
+        rs = LoginValidator(userEmail, userPassword);
         boolean userChecked = false;
 
         while (rs.next()) {
-            if (username.equals(rs.getString("userName")) && password.equals(rs.getString("userPass"))) {
+            if (userEmail.equals(rs.getString("userEmail")) || userEmail.equals(rs.getString("userName"))
+                    && userPassword.equals(rs.getString("userPass"))) {
                 userChecked = true;
+
+                VaadinSession.getCurrent().setAttribute("email", rs.getString("userEmail"));
+                VaadinSession.getCurrent().setAttribute("username", rs.getString("userName"));
+
                 break;
             }
         }
@@ -35,25 +47,32 @@ public class LoginDAO extends DataAccess {
         CloseConnection();
         return userChecked;
     }
+    
+    public static String getUserInfo() {
+        return VaadinSession.getCurrent().getAttribute("email")
+                + ", " + VaadinSession.getCurrent().getAttribute("username");
+    }
 
     public boolean CreateUser() throws SQLException {
-        boolean userCreated = RegisterUserData(username, password);
+        boolean userCreated = UpdateUserData(userEmail, userName, userPassword);
         CloseConnection();
 
         return userCreated;
     }
 
-    private boolean ValidateUsername() throws SQLException, ClassNotFoundException {
+    private boolean ValidateUser() throws SQLException, ClassNotFoundException {
         EmailValidator emailValidator = new EmailValidator("");
-        return emailValidator.isValid(username) && username != null && username.length() <= 50;
+        boolean validUsername = userName != null || !userName.equals(" ");
+        return emailValidator.isValid(userEmail) && userEmail != null && userEmail.length() <= 50 && validUsername;
     }
 
     private boolean ValidatePassword() throws SQLException, ClassNotFoundException {
-        return password != null && password.length() >= 5 && password.length() <= 20 && !password.contains(" ");
+        return userPassword != null && userPassword.length() >= 5 && userPassword.length() <= 20
+                && !userPassword.contains(" ");
     }
 
     public boolean Validation() throws SQLException, ClassNotFoundException {
-        return ValidatePassword() && ValidateUsername();
+        return ValidatePassword() && ValidateUser();
     }
 
 }
