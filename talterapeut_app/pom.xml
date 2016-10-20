@@ -25,14 +25,19 @@
 	</properties>
 
 	<repositories>
-		<!--<repository>-->
-			<!--<id>vaadin-addons</id>-->
-			<!--<url>http://maven.vaadin.com/vaadin-addons</url>-->
-		<!--</repository>-->
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
 		<repository>
 			<id>central</id>
 			<name>Maven Central</name>
 			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Maven Central</name>
+			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 	</repositories>
 
