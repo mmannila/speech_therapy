@@ -29,21 +29,21 @@ public class LoginView extends VerticalLayout implements View {
         buttonLayout.setSpacing(true);
         buttonLayout.setMargin(true);
 
-        emailField = new TextField("E-post eller användarnamn:");
-        emailField.setInputPrompt("epost@adress.com");
+        emailField = new TextField("E-mail or username:");
+        emailField.setInputPrompt("name@email.com");
         emailField.setRequired(true);
         emailField.setWidth("300");
 
-        usernameField = new TextField("Användarnamn:");
+        usernameField = new TextField("Username:");
         usernameField.setRequired(true);
         usernameField.setWidth("300");
         usernameField.setVisible(false);
 
-        passwordField = new PasswordField("Lösenord:");
+        passwordField = new PasswordField("Password:");
         passwordField.setRequired(true);
         passwordField.setWidth("300");
 
-        Button loginButton = new Button("Logga in");
+        Button loginButton = new Button("Login");
         loginButton.addClickListener(login -> {
             try {
                 Login();
@@ -54,9 +54,9 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
-        Button createUserButton = new Button("Skapa användare");
+        Button createUserButton = new Button("Create user");
 
-        Button registerButton = new Button("Registrera");
+        Button registerButton = new Button("Register");
         registerButton.setVisible(false);
         registerButton.addClickListener(register -> {
             try {
@@ -72,7 +72,7 @@ public class LoginView extends VerticalLayout implements View {
             createUserButton.setVisible(false);
             registerButton.setVisible(true);
             usernameField.setVisible(true);
-            emailField.setCaption("E-post:");
+            emailField.setCaption("E-mail:");
         });
 
         buttonLayout.addComponents(loginButton, createUserButton, registerButton);
@@ -92,7 +92,7 @@ public class LoginView extends VerticalLayout implements View {
         if (login.CheckUser()) {
             TerapeutUI.navigator.navigateTo(TerapeutUI.APPVIEW);
         } else {
-            Notification.show("Felaktigt användarnamn eller lösenord.");
+            Notification.show("Wrong username or password.");
         }
     }
 
@@ -100,10 +100,10 @@ public class LoginView extends VerticalLayout implements View {
         login = new LoginDAO(emailField.getValue(), usernameField.getValue(), passwordField.getValue());
 
         if (login.Validation() && login.CreateUser()) {
-            Notification.show("Registreringen lyckades.");
+            Notification.show("Successful registration.");
 
         } else {
-            Notification.show("Registreringen misslyckades.");
+            Notification.show("Registration failed.");
             emailField.clear();
             passwordField.clear();
             usernameField.clear();
