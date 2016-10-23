@@ -164,6 +164,11 @@ public class AppView extends VerticalLayout implements View {
         reset();
     }
 
+    public static void setPhrase(ArrayList<Image> al) {
+        setOfImages = al;
+        reset();
+    }
+
     public static int getPhraseLength() {
         return phrase_length;
     }

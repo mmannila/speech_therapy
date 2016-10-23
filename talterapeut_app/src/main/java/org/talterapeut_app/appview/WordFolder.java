@@ -17,17 +17,20 @@ public class WordFolder extends Button implements Button.ClickListener {
     private Button subjButton, verbButton, objButton;
     private Button btn1, btn2, btn3;
     private Panel imagePanel;
+    private ArrayList<Image> selectedPhrase;
 
     private Category selectedCategory;
 
+    // Enum for checking Word Category. Should be done with a Word Object
     private enum Category {
         SUBJECT,
         VERB,
         OBJECT
     }
 
-
     public WordFolder() {
+
+        selectedPhrase = new ArrayList<>();
         setCaption("Word Folder");
         addClickListener(e -> {
             promptImageSelector();
@@ -62,16 +65,21 @@ public class WordFolder extends Button implements Button.ClickListener {
         verbButton = new Button("Verb");
         verbButton.setWidth("100px");
         verbButton.addClickListener(this);
-        objButton = new Button("Object");
-        objButton.setWidth("100px");
-        objButton.addClickListener(this);
 
         buttonHolder.addComponent(subjButton);
         buttonHolder.addComponent(verbButton);
-        buttonHolder.addComponent(objButton);
+
         buttonHolder.setComponentAlignment(subjButton, Alignment.MIDDLE_LEFT);
         buttonHolder.setComponentAlignment(verbButton, Alignment.MIDDLE_LEFT);
-        buttonHolder.setComponentAlignment(objButton, Alignment.MIDDLE_LEFT);
+
+        // SEE IF PHRASE LENGTH ALLOWS THE USE OF OBJECT
+        if (AppView.getPhraseLength() == 3) {
+            objButton = new Button("Object");
+            objButton.setWidth("100px");
+            objButton.addClickListener(this);
+            buttonHolder.addComponent(objButton);
+            buttonHolder.setComponentAlignment(objButton, Alignment.MIDDLE_LEFT);
+        }
 
 
         // VERTICAL COLUMNS FOR IMAGES
@@ -96,16 +104,20 @@ public class WordFolder extends Button implements Button.ClickListener {
         contentLayout.setComponentAlignment(phraseHolderLayout, Alignment.BOTTOM_CENTER);
 
         phraseSubjImage = new Image();
+        phraseSubjImage.setDescription("Subject");
         phraseSubjImage.setWidth(160.0f, Unit.PIXELS);
         phraseSubjImage.setHeight(160.0f, Unit.PIXELS);
         phraseHolderLayout.addComponent(phraseSubjImage);
 
         phraseVerbImage = new Image();
+        phraseSubjImage.setDescription("Verb");
+
         phraseVerbImage.setWidth(160.0f, Unit.PIXELS);
         phraseVerbImage.setHeight(160.0f, Unit.PIXELS);
         phraseHolderLayout.addComponent(phraseVerbImage);
 
         phraseObjImage = new Image();
+        phraseSubjImage.setDescription("Object");
         phraseObjImage.setWidth(160.0f, Unit.PIXELS);
         phraseObjImage.setHeight(160.0f, Unit.PIXELS);
         phraseHolderLayout.addComponent(phraseObjImage);
@@ -122,8 +134,17 @@ public class WordFolder extends Button implements Button.ClickListener {
         contentLayout.setComponentAlignment(generatePhraseButton, Alignment.BOTTOM_CENTER);
         generatePhraseButton.addClickListener(e -> {
             Notification.show("THIS IS THE GENERATED PHRASE");
-            // ADD PHRASE TO APPVIEW
-            // CLOSE WINDOW
+
+            selectedPhrase.add(phraseSubjImage);
+            selectedPhrase.add(phraseVerbImage);
+
+            if (AppView.getPhraseLength() == 3) {
+                selectedPhrase.add(phraseObjImage);
+            }
+
+            AppView.setPhrase(selectedPhrase);
+            window.close();
+
         });
 
 
@@ -148,9 +169,8 @@ public class WordFolder extends Button implements Button.ClickListener {
             if (iter.hasNext()) {
 
                 Image img1 = iter.next();
-                img1.setWidth(160.0f, Unit.PIXELS);
-                img1.setHeight(160.0f, Unit.PIXELS);
-                btn1 = new Button(img1.getSource());
+                btn1 = new Button();
+                btn1.setIcon(img1.getSource());
 
                 // CHEESY ONCLICKLISTENER
                 btn1.addClickListener(e1 -> {
@@ -173,10 +193,9 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 });
 
-                btn1.addStyleName("img_button_col1");
+                btn1.addStyleName("borderless");
                 btn1.setWidth(160.0f, Unit.PIXELS);
                 btn1.setHeight(160.0f, Unit.PIXELS);
-                btn1.addClickListener(this);
                 imageCol1.addComponent(btn1);
                 imageCol1.setComponentAlignment(btn1, Alignment.MIDDLE_CENTER);
             }
@@ -184,8 +203,6 @@ public class WordFolder extends Button implements Button.ClickListener {
             if (iter.hasNext()) {
 
                 Image img2 = iter.next();
-                img2.setWidth(160.0f, Unit.PIXELS);
-                img2.setHeight(160.0f, Unit.PIXELS);
                 btn2 = new Button(img2.getSource());
 
                 // CHEESY ONCLICKLISTENER
@@ -209,10 +226,9 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 });
 
-                btn2.addStyleName("img_button_col2");
+                btn2.addStyleName("borderless");
                 btn2.setWidth(160.0f, Unit.PIXELS);
                 btn2.setHeight(160.0f, Unit.PIXELS);
-                btn2.addClickListener(this);
                 imageCol2.addComponent(btn2);
                 imageCol2.setComponentAlignment(btn2, Alignment.MIDDLE_CENTER);
             }
@@ -220,8 +236,6 @@ public class WordFolder extends Button implements Button.ClickListener {
             if (iter.hasNext()) {
 
                 Image img3 = iter.next();
-                img3.setWidth(160.0f, Unit.PIXELS);
-                img3.setHeight(160.0f, Unit.PIXELS);
                 btn3 = new Button(img3.getSource());
 
                 // CHEESY ONCLICKLISTENER
@@ -245,10 +259,9 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 });
 
-                btn3.addStyleName("img_button_col3");
+                btn3.addStyleName("borderless");
                 btn3.setWidth(160.0f, Unit.PIXELS);
                 btn3.setHeight(160.0f, Unit.PIXELS);
-                btn3.addClickListener(this);
                 imageCol3.addComponent(btn3);
                 imageCol3.setComponentAlignment(btn3, Alignment.MIDDLE_CENTER);
             }
