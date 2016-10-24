@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<v-vertical-layout spacing>
+    <v-vertical-layout spacing size-auto :middle :center>
+        <v-label><h3>Sign In</h3></v-label>
+        <v-text-field caption="E-mail or username"
+                      _id="emailField"
+                      required="true"
+                      input-prompt="name@email.com"
+        />
+        <v-text-field caption="Username:"
+                      _id="usernameField"
+                      required="true"
+        />
+        <v-password-field caption="Password:"
+                          _id="passwordField"
+                          required="true"
+        />
+        <v-horizontal-layout spacing>
+            <v-button style-name="primary" _id="loginButton">Login</v-button>
+            <v-button _id="registerButton">Register</v-button>
+        </v-horizontal-layout>
+    </v-vertical-layout>
+</v-vertical-layout>
+</body>
+</html>
