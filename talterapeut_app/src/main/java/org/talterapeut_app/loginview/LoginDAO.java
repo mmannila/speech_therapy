@@ -1,7 +1,7 @@
 package org.talterapeut_app.loginview;
 
 import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.UI;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ public class LoginDAO extends DataAccess {
     private String userName = null;
     private String userEmail = null;
     private String userPassword = null;
-    private ResultSet rs = null;
+    private static ResultSet rs;
 
     public LoginDAO(String email, String user, String pass) throws SQLException, ClassNotFoundException {
         super();
@@ -35,22 +35,15 @@ public class LoginDAO extends DataAccess {
         while (rs.next()) {
             if (userEmail.equals(rs.getString("userEmail")) || userEmail.equals(rs.getString("userName"))
                     && userPassword.equals(rs.getString("userPass"))) {
+                UI.getCurrent().getSession().setAttribute("email", rs.getString("userEmail"));
+                UI.getCurrent().getSession().setAttribute("username", rs.getString("userName"));
                 userChecked = true;
-
-                VaadinSession.getCurrent().setAttribute("email", rs.getString("userEmail"));
-                VaadinSession.getCurrent().setAttribute("username", rs.getString("userName"));
-
                 break;
             }
         }
 
         CloseConnection();
         return userChecked;
-    }
-    
-    public static String getUserInfo() {
-        return VaadinSession.getCurrent().getAttribute("email")
-                + ", " + VaadinSession.getCurrent().getAttribute("username");
     }
 
     public boolean CreateUser() throws SQLException {

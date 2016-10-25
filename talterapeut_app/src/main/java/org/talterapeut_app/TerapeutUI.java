@@ -6,7 +6,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
@@ -61,9 +60,11 @@ public class TerapeutUI extends UI {
                 }
 
                 if (selectedItem.getText().equals("Log Out")) {
-                    navigator.navigateTo(LOGINVIEW);
+                    UI.getCurrent().getSession().setAttribute("email", null);
+                    UI.getCurrent().getSession().setAttribute("username", null);
+                    UI.getCurrent().getSession().close();
+//                    navigator.navigateTo(LOGINVIEW);
                     Page.getCurrent().setLocation("/");
-                    VaadinSession.getCurrent().close();
                 }
 
                 if (previous != null) {

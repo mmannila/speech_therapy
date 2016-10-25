@@ -1,27 +1,15 @@
 package org.talterapeut_app;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.talterapeut_app.appview.DragDropLayoutBottom;
-import org.talterapeut_app.appview.DragDropLayoutTop;
-import org.talterapeut_app.appview.RandomButton;
-import org.talterapeut_app.appview.ResetButton;
-import org.talterapeut_app.appview.SoundButton;
-import org.talterapeut_app.appview.WordFolder;
-import org.talterapeut_app.appview.WordLengthLayout;
-import org.talterapeut_app.model.ImageLoader;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinService;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.talterapeut_app.appview.*;
+import org.talterapeut_app.model.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AppView extends VerticalLayout implements View {
     final private static String basepath = VaadinService.getCurrent()
@@ -161,8 +149,12 @@ public class AppView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         // TODO Auto-generated method stub
-        randomize();
-
+        if (UI.getCurrent().getSession().getAttribute("email") == null) {
+//            Page.getCurrent().setLocation("/");
+            TerapeutUI.navigator.navigateTo(TerapeutUI.LOGINVIEW);
+        } else {
+            randomize();
+        }
     }
 
 }

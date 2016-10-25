@@ -9,6 +9,10 @@
     <v-vertical-layout spacing size-auto :middle :center>
         <v-label><h3>Sign In</h3></v-label>
         <v-text-field caption="E-mail or username"
+                      _id="emailUsernameField"
+                      required="true"
+        />
+        <v-text-field caption="E-mail"
                       _id="emailField"
                       required="true"
                       input-prompt="name@email.com"
@@ -16,6 +20,7 @@
         <v-text-field caption="Username:"
                       _id="usernameField"
                       required="true"
+                      input-prompt="username"
         />
         <v-password-field caption="Password:"
                           _id="passwordField"
@@ -23,7 +28,9 @@
         />
         <v-horizontal-layout spacing>
             <v-button style-name="primary" _id="loginButton">Login</v-button>
-            <v-button _id="registerButton">Register</v-button>
+            <v-button style-name="primary" _id="registerButton">Register</v-button>
+            <v-button _id="createUserButton">Register</v-button>
+            <v-button _id="cancelButton">Cancel</v-button>
         </v-horizontal-layout>
     </v-vertical-layout>
 </v-vertical-layout>

@@ -17,10 +17,13 @@ import com.vaadin.ui.declarative.Design;
 public class LoginViewLayout extends VerticalLayout implements View {
 
     protected PasswordField passwordField;
-    protected TextField emailField;
-    protected TextField usernameField;
-    protected Button loginButton;
-    protected Button registerButton;
+    protected TextField emailField; //Field for e-mail ONLY att registration
+    protected TextField usernameField; //User specified username
+    protected TextField emailUsernameField; //Field for username OR e-mail in login
+    protected Button loginButton; //Logs in with username OR e-mail AND password
+    protected Button registerButton; //THE register button for finalizing the registration process.
+    protected Button createUserButton; //"register" button at login. Changes viewstate only.
+    protected Button cancelButton; //Cancels register process.
 
     public LoginViewLayout() {
         Design.read(this);
@@ -28,6 +31,5 @@ public class LoginViewLayout extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        emailField.focus();
     }
 }
