@@ -1,17 +1,17 @@
 package org.talterapeut_app;
 
+import javax.servlet.annotation.WebServlet;
+
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
-
-import javax.servlet.annotation.WebServlet;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser
@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
  * initialize non-component functionality.
  */
 @Theme("mytheme")
+@PreserveOnRefresh
 // @SuppressWarnings("serial")
 public class TerapeutUI extends UI {
 
@@ -35,7 +36,7 @@ public class TerapeutUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         getPage().setTitle("Speech Therapy App (WIP)");
-        
+
         // sets up the navigator and views before jumping to the app view
         navigator = new Navigator(this, this);
         navigator.addView(APPVIEW, new AppView());
@@ -43,7 +44,7 @@ public class TerapeutUI extends UI {
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.navigateTo(LOGINVIEW);
     }
-    
+
     public static MenuBar getMenuBar() {
         MenuBar tmp = new MenuBar();
 
@@ -61,9 +62,11 @@ public class TerapeutUI extends UI {
                 }
 
                 if (selectedItem.getText().equals("Log Out")) {
-                    navigator.navigateTo(LOGINVIEW);
+                    UI.getCurrent().getSession().setAttribute("email", null);
+                    UI.getCurrent().getSession().setAttribute("username", null);
+                    UI.getCurrent().getSession().close();
+                    // navigator.navigateTo(LOGINVIEW);
                     Page.getCurrent().setLocation("/");
-                    VaadinSession.getCurrent().close();
                 }
 
                 if (previous != null) {
