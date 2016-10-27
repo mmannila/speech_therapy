@@ -162,7 +162,14 @@ public class AppView extends VerticalLayout implements View {
     }
 
     public static void setPhrase(ArrayList<Image> al) {
-        setOfImages = al;
+
+        setOfImages.clear();
+
+        for(int i = 0; i < al.size(); i++) {
+            setOfImages.add(al.get(i));
+        }
+
+        Collections.shuffle(setOfImages);
         reset();
     }
 
