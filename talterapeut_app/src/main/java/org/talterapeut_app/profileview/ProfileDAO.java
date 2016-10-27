@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.talterapeut_app.data.DataAccess;
 
-import com.vaadin.ui.UI;
-
 public class ProfileDAO extends DataAccess {
     private String userName = null;
     private String userEmail = null;
@@ -36,10 +34,6 @@ public class ProfileDAO extends DataAccess {
             if (userEmail.equals(rs.getString("userEmail"))
                     || userEmail.equals(rs.getString("userName"))
                     && userPassword.equals(rs.getString("userPass"))) {
-                UI.getCurrent().getSession()
-                        .setAttribute("email", rs.getString("userEmail"));
-                UI.getCurrent().getSession()
-                        .setAttribute("username", rs.getString("userName"));
                 userChecked = true;
                 break;
             }

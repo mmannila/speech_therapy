@@ -38,6 +38,9 @@ public class PasswordChangeForm extends FormLayout {
                             profile_dao = new ProfileDAO(sessionEmail,
                                     sessionUser, currentPass.getValue());
                             if (validateFields()) {
+                                profile_dao = new ProfileDAO(sessionEmail,
+                                        sessionUser, newPass.getValue());
+
                                 if (profile_dao.ChangePassword()) {
                                     Notification
                                             .show("The password has been changed!");
@@ -81,7 +84,7 @@ public class PasswordChangeForm extends FormLayout {
             return false;
         }
 
-        if (newPassword != repeatPass.getValue()) {
+        if (!newPassword.equals(repeatPass.getValue())) {
             Notification
                     .show("The repeated password does not match the new one.");
             return false;

@@ -74,10 +74,20 @@ public abstract class DataAccess {
 
         try {
             statement = conn
-                    .prepareStatement("UPDATE table_name SET password= ? WHERE username= ?;");
-            statement.setString(1, username);
-            statement.setString(2, password);
+                    .prepareStatement("UPDATE users SET userPass = ? WHERE userName = ?;");
+            statement.setString(2, username);
+            statement.setString(1, password);
             statement.executeUpdate();
+
+            // System.out.println("User: " + username);
+            // System.out.println("User: " + password);
+            ResultSet rs = null;
+
+            statement = conn.prepareStatement("SELECT userPass FROM users "
+                    + "WHERE userName = 'mmannila';");
+            rs = statement.executeQuery();
+
+            System.out.println(rs.getString("userPass"));
 
             return true;
 
