@@ -2,6 +2,7 @@ package org.talterapeut_app;
 
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -21,6 +22,7 @@ public class LoginView extends LoginViewLayout{
     public LoginView() {
         // Bind event handlers to declarative UI with static typing
         loginButton.addClickListener(this::loginButton);
+        loginButton.setClickShortcut(KeyCode.ENTER);
         registerButton.addClickListener(this::registerButton);
         createUserButton.addClickListener(this::createUserButton);
         cancelButton.addClickListener(this::cancel);
