@@ -35,7 +35,7 @@ public class TerapeutUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        getPage().setTitle("Speech Therapy App (WIP)");
+        getPage().setTitle("Phraser - Speech Therapy Aid");
 
         // sets up the navigator and views before jumping to the app view
         navigator = new Navigator(this, this);

@@ -79,15 +79,24 @@ public abstract class DataAccess {
             statement.setString(1, password);
             statement.executeUpdate();
 
-            // System.out.println("User: " + username);
-            // System.out.println("User: " + password);
-            ResultSet rs = null;
+            return true;
 
-            statement = conn.prepareStatement("SELECT userPass FROM users "
-                    + "WHERE userName = 'mmannila';");
-            rs = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-            System.out.println(rs.getString("userPass"));
+        return false;
+    }
+
+    protected boolean ChangeUserEmail(String username, String email)
+            throws SQLException {
+
+        try {
+            statement = conn
+                    .prepareStatement("UPDATE users SET userEmail = ? WHERE userName = ?;");
+            statement.setString(2, username);
+            statement.setString(1, email);
+            statement.executeUpdate();
 
             return true;
 

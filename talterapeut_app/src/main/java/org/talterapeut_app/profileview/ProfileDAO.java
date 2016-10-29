@@ -19,13 +19,6 @@ public class ProfileDAO extends DataAccess {
         this.userPassword = pass;
     }
 
-    public ProfileDAO(String email, String pass) throws SQLException,
-            ClassNotFoundException {
-        super();
-        this.userEmail = email;
-        this.userPassword = pass;
-    }
-
     public boolean CheckUser() throws SQLException {
         rs = LoginValidator(userEmail, userPassword);
         boolean userChecked = false;
@@ -44,9 +37,16 @@ public class ProfileDAO extends DataAccess {
     }
 
     public boolean ChangePassword() throws SQLException {
-        boolean userCreated = ChangeUserPassword(userName, userPassword);
+        boolean passwordChanged = ChangeUserPassword(userName, userPassword);
         CloseConnection();
 
-        return userCreated;
+        return passwordChanged;
+    }
+
+    public boolean ChangeEmail() throws SQLException {
+        boolean emailChanged = ChangeUserEmail(userName, userEmail);
+        CloseConnection();
+
+        return emailChanged;
     }
 }
