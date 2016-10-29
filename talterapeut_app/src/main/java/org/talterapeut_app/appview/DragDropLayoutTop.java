@@ -7,12 +7,11 @@ import org.talterapeut_app.AppView;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 import fi.jasoft.dragdroplayouts.DDPanel;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
-public class DragDropLayoutTop extends VerticalLayout {
+public class DragDropLayoutTop extends CssLayout {
     ArrayList<DDPanel> topPanels;
     CssLayout dragDropAreaTop;
     Label phraseLabel;
@@ -36,9 +35,6 @@ public class DragDropLayoutTop extends VerticalLayout {
         dragDropAreaTop.setSizeFull();
         phraseLabel.setSizeFull();
         addComponent(dragDropAreaTop);
-        addComponent(phraseLabel);
-        setExpandRatio(dragDropAreaTop, 1);
-        setExpandRatio(phraseLabel, 1);
     }
 
     public void setPhraseLabel(String str) {
@@ -57,7 +53,7 @@ public class DragDropLayoutTop extends VerticalLayout {
             }
 
         }
-        phraseLabel.setValue("HOWDY");
+        phraseLabel.setValue(""); // HOWDY
     }
 
     public ArrayList<Component> getComponents() {
