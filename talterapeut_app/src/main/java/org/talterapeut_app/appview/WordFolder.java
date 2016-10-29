@@ -46,6 +46,7 @@ public class WordFolder extends Button implements Button.ClickListener {
     private void promptImageSelector() {
 
         initWindow();
+        selectedPhrase.clear();
 
         // VERTICAL HOLDS ALL CONTENT (Tried grid without visual success)
         VerticalLayout contentLayout = new VerticalLayout();
@@ -164,6 +165,7 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 Notification.show("The phrase was generated");
                 AppView.setPhrase(selectedPhrase);
+
                 window.close();
 
             } else {

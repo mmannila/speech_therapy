@@ -12967,3 +12967,45 @@ div.v-layout.v-horizontal.v-widget {
 	width: 19px;
 	overflow: hidden;
 }
+
+.mytheme .v-button-categorybutton {
+	margin: 2px;
+	width: 100px;
+	height: 50px;
+}
+
+.mytheme .v-button-generatephrasebutton {
+	margin-top: 15px;
+}
+
+.mytheme .v-image-categoryimage {
+	border: none;
+}
+
+.mytheme .v-image-selectorphraseimage {
+	border: none;
+}
+
+.mytheme .v-panel {
+	margin-top: 10px;
+	margin-right: 10px;
+	border-radius: 5px;
+	border-color: #4b4b4b;
+	-webkit-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+	-moz-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+	box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+}
+
+.mytheme .v-horizontallayout-selectorphraselayout {
+	padding: 0px;
+	margin-top: 15px;
+	border: 1px solid #4b4b4b;
+	border-radius: 5px;
+	-webkit-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+	-moz-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+	box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.13);
+}
+
+.mytheme .v-verticallayout-categorylayout {
+	padding: 10px;
+}
