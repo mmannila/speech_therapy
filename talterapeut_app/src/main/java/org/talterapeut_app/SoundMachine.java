@@ -1,6 +1,8 @@
 package org.talterapeut_app;
 
 import java.io.File;
+import java.nio.file.Path;
+
 import org.talterapeut_app.Constant;
 
 import com.vaadin.server.FileResource;
@@ -13,11 +15,15 @@ import com.vaadin.ui.Audio;
  */
 public class SoundMachine  {
 	
-	private String mediaBasepath; // media files basepath
-	private Audio audio;
+	protected String mediaBasepath; // media files basepath
+	protected Audio audio;
 	
-	Resource resource_S;
-	Resource resource_F;
+	protected Resource resource_S;
+	protected Resource resource_F;
+
+	protected Resource resource1;
+	protected Resource resource2;
+	protected Resource resource3;
 
 	SoundMachine(Audio audio, String mediaBasepath) {
 		this.audio = audio;
@@ -32,7 +38,25 @@ public class SoundMachine  {
 	public void loadResources() {
 		resource_S = new FileResource(new File(mediaBasepath + Constant.SOUND_SUCCESS_FILENAME));
 		resource_F = new FileResource(new File(mediaBasepath + Constant.SOUND_FAIL_FILENAME));
-		System.out.println("Loaded resources.");
+		System.out.println("Loaded F and S resources.");
+	}
+	
+	public void loadWordSounds(String word1, String word2, String word3) {
+		resource1 = new FileResource(new File(word1));
+		resource2 = new FileResource(new File(word2));
+		resource3 = new FileResource(new File(word3));
+		System.out.println("Loaded word sound resources.");
+	}
+	
+	public void playWordSounds() {
+		// TODO play some kind of proper sequence
+		System.out.println("Playing word sounds... " + resource1.getMIMEType());
+        audio.setSource(resource1);
+    	audio.play();
+        audio.setSource(resource2);
+    	audio.play();
+    	audio.setSource(resource3);
+    	audio.play();
 	}
 	
 	/**

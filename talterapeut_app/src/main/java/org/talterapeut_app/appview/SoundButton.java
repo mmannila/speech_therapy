@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import org.talterapeut_app.AppView;
+import org.talterapeut_app.Constant;
 
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
@@ -43,8 +44,13 @@ public class SoundButton extends Button {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
                 
+                AppView.soundMachine.loadWordSounds(
+                		AppView.getBasepath() + "/WEB-INF/subjekt/katt.en.mp3", 
+                		AppView.getBasepath() + "/WEB-INF/verb/luktar.en.mp3", 
+                		AppView.getBasepath() + "/WEB-INF/objekt/ost.en.mp3");
                 // soundMachine.playSound(isAnswerCorrect(tmp, phrase_length)); // TODO implementation and use :)
                 AppView.soundMachine.playSound(tmp.equals("Subject Verb Object"));
+                AppView.soundMachine.playWordSounds();
 
             } else {
                 AppView.setDragDropLabel("This DnD layout is empty!");
