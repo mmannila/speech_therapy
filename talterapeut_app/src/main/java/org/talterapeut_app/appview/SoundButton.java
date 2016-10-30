@@ -45,12 +45,14 @@ public class SoundButton extends Button {
                 }
                 
                 AppView.soundMachine.loadWordSounds(
+                		// for testing just play a set of sounds
                 		AppView.getBasepath() + "/WEB-INF/subjekt/katt.en.mp3", 
                 		AppView.getBasepath() + "/WEB-INF/verb/luktar.en.mp3", 
                 		AppView.getBasepath() + "/WEB-INF/objekt/ost.en.mp3");
+                AppView.soundMachine.playWordSounds();
+
                 // soundMachine.playSound(isAnswerCorrect(tmp, phrase_length)); // TODO implementation and use :)
                 AppView.soundMachine.playSound(tmp.equals("Subject Verb Object"));
-                AppView.soundMachine.playWordSounds();
 
             } else {
                 AppView.setDragDropLabel("This DnD layout is empty!");

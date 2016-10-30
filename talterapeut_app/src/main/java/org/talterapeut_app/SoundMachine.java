@@ -8,10 +8,17 @@ import org.talterapeut_app.Constant;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Audio;
+import com.vaadin.ui.Component.Listener;
 
 /**
- * Audio
+ * Audio play and resource load.
  *
+ * Is the mimetype A problem if the audio does not play in all devices
+ * This could help maybe: use StreamResource (not FileResource) and:
+ 	@Override
+	public String getMIMEType() {
+    	return "audio/mp3";
+	}
  */
 public class SoundMachine  {
 	
@@ -49,8 +56,10 @@ public class SoundMachine  {
 	}
 	
 	public void playWordSounds() {
-		// TODO play some kind of proper sequence
-		System.out.println("Playing word sounds... " + resource1.getMIMEType());
+		/* TODO play some kind of proper sequence - audio.play does not block and wait until the audio has played
+		 * Event Listener Wait/Notify could help?
+		 */
+		System.out.println("Playing word sounds... MIMEType of first audio file:" + resource1.getMIMEType());
         audio.setSource(resource1);
     	audio.play();
         audio.setSource(resource2);

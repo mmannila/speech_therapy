@@ -42,6 +42,14 @@ public class ImageLoader {
 		}
 	}
 	
+	/**
+	 * Reads JPGs and audio files and creates Words from them.
+	 * Uses filename as key (or id) for Word.
+	 * TODO implementation
+	 * 
+	 * @param folder to look for files
+	 * @return list of Words
+	 */
 	public ArrayList<Word> getWords(File folder) {
 		ArrayList<Word> words = new ArrayList<>();	
 		for (File f : findJPGFiles(folder)) {
