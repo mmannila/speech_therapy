@@ -36,16 +36,16 @@ public class DragDropLayouts extends VerticalLayout {
 
         for (int i = 0; i < 3; i++) {
             DDPanel top = new DDPanel();
-            top.setWidth("125px");
-            top.setHeight("125px");
+            top.setWidth("140px");
+            top.setHeight("140px");
             top.setDragMode(LayoutDragMode.CLONE);
             top.setDropHandler(new SwapPanelDropHandler());
             topPanels.add(top);
             dragDropAreaTop.addComponent(topPanels.get(i));
 
             DDPanel bottom = new DDPanel();
-            bottom.setWidth("125px");
-            bottom.setHeight("125px");
+            bottom.setWidth("140px");
+            bottom.setHeight("140px");
             bottom.setDragMode(LayoutDragMode.CLONE);
             bottom.setDropHandler(new SwapPanelDropHandler());
             bottomPanels.add(bottom);

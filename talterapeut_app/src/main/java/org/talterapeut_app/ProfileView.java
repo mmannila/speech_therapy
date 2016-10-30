@@ -13,6 +13,7 @@ public class ProfileView extends VerticalLayout implements View {
 
     public ProfileView() {
         VerticalLayout profileLayout = new VerticalLayout();
+        profileLayout.setHeight("100%");
         profileLayout.setMargin(true);
         profileLayout.setSpacing(true);
         profileLayout.setSizeFull();

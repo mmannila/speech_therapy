@@ -116,22 +116,16 @@ public class WordFolder extends Button implements Button.ClickListener {
         phraseSubjImage = new Image();
         phraseSubjImage.setDescription("Subject");
         phraseSubjImage.addStyleName("selectorphraseimage");
-        phraseSubjImage.setWidth(140.0f, Unit.PIXELS);
-        phraseSubjImage.setHeight(140.0f, Unit.PIXELS);
         phraseHolderLayout.addComponent(phraseSubjImage);
 
         phraseVerbImage = new Image();
         phraseVerbImage.setDescription("Verb");
         phraseVerbImage.addStyleName("selectorphraseimage");
-        phraseVerbImage.setWidth(140.0f, Unit.PIXELS);
-        phraseVerbImage.setHeight(140.0f, Unit.PIXELS);
         phraseHolderLayout.addComponent(phraseVerbImage);
 
         phraseObjImage = new Image();
         phraseObjImage.setDescription("Object");
         phraseObjImage.addStyleName("selectorphraseimage");
-        phraseObjImage.setWidth(140.0f, Unit.PIXELS);
-        phraseObjImage.setHeight(140.0f, Unit.PIXELS);
 
         if (AppView.getPhraseLength() == 2) {
             phraseObjImage.setVisible(false);
@@ -192,8 +186,6 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 Image img1 = iter.next();
                 img1.addStyleName("categoryimage");
-                img1.setWidth(140.0f, Unit.PIXELS);
-                img1.setHeight(140.0f, Unit.PIXELS);
 
                 // CHEESY ONCLICKLISTENER
                 img1.addClickListener(e1 -> {
@@ -224,8 +216,6 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 Image img2 = iter.next();
                 img2.addStyleName("categoryimage");
-                img2.setWidth(140.0f, Unit.PIXELS);
-                img2.setHeight(140.0f, Unit.PIXELS);
 
                 // CHEESY ONCLICKLISTENER
                 img2.addClickListener(e2 -> {
@@ -256,8 +246,6 @@ public class WordFolder extends Button implements Button.ClickListener {
 
                 Image img3 = iter.next();
                 img3.addStyleName("categoryimage");
-                img3.setWidth(140.0f, Unit.PIXELS);
-                img3.setHeight(140.0f, Unit.PIXELS);
 
                 // CHEESY ONCLICKLISTENER
                 img3.addClickListener(e3 -> {
@@ -292,7 +280,7 @@ public class WordFolder extends Button implements Button.ClickListener {
         window.addStyleName("categorywindow");
         window.setModal(true);
         window.setWidth(600.0f, Unit.PIXELS);
-        window.setHeight(720.0f, Unit.PIXELS);
+        window.setHeight(660.0f, Unit.PIXELS);
         window.setResizable(false);
         window.center();
 

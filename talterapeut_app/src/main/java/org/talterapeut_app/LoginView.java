@@ -20,6 +20,7 @@ public class LoginView extends LoginViewLayout{
     private LoginDAO login;
 
     public LoginView() {
+
         // Bind event handlers to declarative UI with static typing
         loginButton.addClickListener(this::loginButton);
         loginButton.setClickShortcut(KeyCode.ENTER);
@@ -33,6 +34,8 @@ public class LoginView extends LoginViewLayout{
     }
 
     private void initialViewState() {
+
+        this.addStyleName("loginviewcontainer");
         emailUsernameField.setVisible(true);
         emailField.setVisible(false);
         cancelButton.setVisible(false);
@@ -48,6 +51,7 @@ public class LoginView extends LoginViewLayout{
         usernameField.setIcon(null);
         emailUsernameField.setIcon(null);
         passwordField.setIcon(null);
+
     }
 
     private void emailUsernameListener(FieldEvents.TextChangeEvent event) {
