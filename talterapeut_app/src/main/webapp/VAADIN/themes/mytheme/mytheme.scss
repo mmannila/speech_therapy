@@ -113,6 +113,8 @@
     border-radius: 5px;
   }
 
+  // TODO: ADD PANEL RESPONSIVENESS (SHRINK TO 100x100 PIXELS ON RATIO OF LESS THAN 60%)
+
   .v-window-closebox {
 
     color: #ecf2f8;
@@ -139,6 +141,8 @@
     height: 50px;
   }
 
+
+
   .v-button {
     height: 37px;
     color: #ecf2f8;
@@ -157,7 +161,23 @@
     min-width: 81px;
   }
 
+  .v-button-secondary {
+
+    color: rgba(40, 40, 40, 0.76);
+    background-color: #bbbbbb;
+    background-image: -webkit-linear-gradient(top, #bbbbbb 2%, #a8a8ab 98%);
+    background-image: linear-gradient(to bottom, #bbbbbb 2%, #a8a8ab 98%);
+
+    /*
+    color: #ecf2f8;
+    background-color: #87bcc4;
+    background-image: -webkit-linear-gradient(top, #b5b8bf 2%, #8b8b8e 98%);
+    background-image: linear-gradient(to bottom, #b5b8bf 2%, #8b8b8e 98%);
+    */
+  }
+
   .v-button-wordlength {
+    z-index: 1;
     min-width: 135px;
   }
 
@@ -183,5 +203,7 @@
   .v-verticallayout-categorylayout {
     padding: 10px;
   }
+
+  //TODO: ADD RESPONSIVENESS TO WORDFOLDER/IMAGESELECTOR
 
 }

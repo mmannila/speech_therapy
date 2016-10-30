@@ -13094,7 +13094,15 @@ div.v-layout.v-horizontal.v-widget {
 	min-width: 81px;
 }
 
+.mytheme .v-button-secondary {
+	color: rgba(40, 40, 40, 0.76);
+	background-color: #bbbbbb;
+	background-image: -webkit-linear-gradient(top, #bbbbbb 2%, #a8a8ab 98%);
+	background-image: linear, to bottom, #bbbbbb 2%, #a8a8ab 98%;
+}
+
 .mytheme .v-button-wordlength {
+	z-index: 1;
 	min-width: 135px;
 }
 
