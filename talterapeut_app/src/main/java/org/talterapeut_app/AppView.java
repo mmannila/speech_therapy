@@ -115,7 +115,7 @@ public class AppView extends VerticalLayout implements View {
 
         Image image;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < getPhraseLength(); i++) {
             image = setOfImages.get(i);
             // dragDropLayouts.addPicture(image);
             dragDropLayoutsBottom.addPicture(image);
@@ -146,13 +146,17 @@ public class AppView extends VerticalLayout implements View {
         imageOfVerb.setDescription("Verb");
         setOfImages.add(imageOfVerb);
 
-        // Object
-        ArrayList<Image> Objects = ImageLoader.loadImages(basepath
-                + "/WEB-INF/objekt/");
-        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
-        Image imageOfObject = Objects.get(randomIndex);
-        imageOfObject.setDescription("Object");
-        setOfImages.add(imageOfObject);
+
+        if (getPhraseLength() > 2) {
+            // Object
+            ArrayList<Image> Objects = ImageLoader.loadImages(basepath
+                    + "/WEB-INF/objekt/");
+            randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+            Image imageOfObject = Objects.get(randomIndex);
+            imageOfObject.setDescription("Object");
+            setOfImages.add(imageOfObject);
+        }
+
 
         Collections.shuffle(setOfImages);
         reset();
