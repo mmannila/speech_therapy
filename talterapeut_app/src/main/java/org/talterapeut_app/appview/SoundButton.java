@@ -19,7 +19,7 @@ public class SoundButton extends Button {
 
             int length = list.size();
             int phrase_length = AppView.getPhraseLength();
-            String tmp = "";
+            String tmp = ""; // collect descriptions of DragDropComponents to this string to find out word order
             if (length > 0) {
                 if (list.get(0) != null) {
                     tmp = list.get(0).getDescription();
@@ -43,8 +43,8 @@ public class SoundButton extends Button {
                     new Notification("Incorrect").show(Page.getCurrent());
                 }
                 
-                // soundMachine.playSound(isAnswerCorrect(Objects)); // TODO
-                AppView.soundMachine.playSound(Objects.equals(tmp,"Subject Verb Object")); // FIXME
+                // soundMachine.playSound(isAnswerCorrect(tmp, phrase_length)); // TODO implementation and use :)
+                AppView.soundMachine.playSound(tmp.equals("Subject Verb Object"));
 
             } else {
                 AppView.setDragDropLabel("This DnD layout is empty!");

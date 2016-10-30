@@ -44,6 +44,8 @@ public class AppView extends VerticalLayout implements View {
     private SoundButton playPhraseButton;
     private Audio audio;
     public static SoundMachine soundMachine;
+    
+    public ArrayList<Word> words = new ArrayList<>(); // only used for audio, for now // TODO make private
 
     public AppView() {
         setSizeFull();
@@ -84,6 +86,8 @@ public class AppView extends VerticalLayout implements View {
         // NOTICE: add these two lines for the other views using the menu bar
         setExpandRatio(gridLayout, 1);
         setExpandRatio(menu, 0);
+        
+        
     }
 
     /**
@@ -98,7 +102,7 @@ public class AppView extends VerticalLayout implements View {
                              // layout
         audio.setAutoplay(false);
         audio.setShowControls(false);
-        audio.setHtmlContentAllowed(false);
+        audio.setHtmlContentAllowed(true); // let's try to set to true to see if it makes any difference
         audio.setStyleName("invisible");
         audio.setAltText("Can't play media");
 
