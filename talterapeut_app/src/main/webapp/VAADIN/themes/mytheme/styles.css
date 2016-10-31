@@ -13140,12 +13140,12 @@ div.v-layout.v-horizontal.v-widget {
 	height: 140px;
 }
 
-.mytheme .v-gridlayout-gridlayout[height-range~="0-700px"] .v-image {
+.mytheme .v-gridlayout-gridlayout[height-range~="0-800px"] .v-image {
 	width: 100px;
 	height: 100px;
 }
 
-.mytheme .v-gridlayout-gridlayout[height-range~="0-700px"] .noscroll {
+.mytheme .v-gridlayout-gridlayout[height-range~="0-800px"] .noscroll {
 	width: 100px;
 	height: 100px;
 }
