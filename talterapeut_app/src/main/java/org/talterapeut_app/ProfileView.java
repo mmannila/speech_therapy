@@ -10,18 +10,15 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class ProfileView extends VerticalLayout implements View {
     VerticalLayout profileLayout;
     Label profileHeader = new Label();
 
     public ProfileView() {
-        profileLayout = new VerticalLayout();
-        profileLayout.setMargin(true);
-        profileLayout.setSpacing(true);
-        profileLayout.setSizeUndefined();
 
-        profileHeader.setStyleName("h2");
+        profileHeader.addStyleName(ValoTheme.LABEL_H2);
 
         Panel changeEmail = new Panel("Change E-mail Address");
         changeEmail.setContent(new EmailChangeForm());
@@ -31,23 +28,25 @@ public class ProfileView extends VerticalLayout implements View {
         changePassword.setContent(new PasswordChangeForm());
         changePassword.setWidthUndefined();
 
+        profileLayout = new VerticalLayout();
+        profileLayout.setMargin(true);
+        profileLayout.setSpacing(true);
+        profileLayout.setSizeUndefined();
+
         profileLayout.addComponent(profileHeader);
         profileLayout.addComponent(changeEmail);
         profileLayout.addComponent(changePassword);
 
         Panel profilePanel = new Panel();
         profilePanel.setContent(profileLayout);
+        profilePanel.addStyleName(ValoTheme.PANEL_BORDERLESS);
         profilePanel.setSizeFull();
-        profilePanel.getContent().setSizeUndefined();
         MenuBar menu = TerapeutUI.getMenuBar();
 
+        setSizeFull();
         addComponent(profilePanel);
-        addComponent(menu);
-
-        // ensures the MenuBar's height is always minimized
-        // NOTICE: add these two lines for the other views using the menu bar
         setExpandRatio(profilePanel, 1);
-        setExpandRatio(menu, 0);
+        addComponent(menu);
     }
 
     @Override
