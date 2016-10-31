@@ -49,13 +49,14 @@
     overflow: hidden;
   }
 
-
-
-
-  .v-ui {
-    background-color: hsl(132, 100%, 47%);
+  .v-image {
+    width: 140px;
+    height: 140px;
   }
 
+  .v-ui {
+    background-color: rgba(67, 202, 245, 0.58)
+  }
 
   .v-panel {
     margin-top: 10px;
@@ -75,7 +76,7 @@
   }
 
   .v-window-wrap {
-    background-color: hsl(132, 100%, 47%);
+    background-color: rgba(67, 202, 245, 0.58);
   }
 
   .v-window-header {
@@ -152,6 +153,7 @@
   }
 
   .v-panel-content-selectorpanel {
+    background-color: white;
     width: 450px;
     height: 400px;
   }
@@ -223,18 +225,4 @@
       height: 100px;
     }
   }
-
-  .v-gridlayout-gridlayout[height-range~="701px-"] {
-    .v-image {
-      width: 140px;
-      height: 140px;
-    }
-
-    .noscroll {
-      width: 140px;
-      height: 140px;
-    }
-  }
-
-
 }
