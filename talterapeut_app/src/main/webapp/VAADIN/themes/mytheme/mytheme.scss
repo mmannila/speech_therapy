@@ -41,14 +41,16 @@
     bottom: 0;
   }
 
-  .v-image {
-    width: 140px;
-    height: 140px;
-  }
-
   .v-textfield {
     border: 1px solid #a8abd6;
   }
+
+  .v-panel-content-noscroll{
+    overflow: hidden;
+  }
+
+
+
 
   .v-ui {
     background-color: hsl(132, 100%, 47%);
@@ -127,22 +129,6 @@
     font-weight: bold;
   }
 
-  .v-panel-content-noscroll {
-    overflow: hidden;
-  }
-
-  .v-verticallayout-loginviewcontainer {
-    margin-top: 50px;
-  }
-
-  .v-button-categorybutton {
-    margin: 2px;
-    width: 100px;
-    height: 50px;
-  }
-
-
-
   .v-button {
     height: 37px;
     color: #ecf2f8;
@@ -159,6 +145,21 @@
     padding: 0 19px;
     font-weight: bold;
     min-width: 81px;
+  }
+
+  .v-verticallayout-loginviewcontainer {
+    margin-top: 50px;
+  }
+
+  .v-panel-content-selectorpanel {
+    width: 450px;
+    height: 400px;
+  }
+
+  .v-button-categorybutton {
+    margin: 2px;
+    width: 100px;
+    height: 50px;
   }
 
   .v-button-secondary {
@@ -204,6 +205,36 @@
     padding: 10px;
   }
 
+  .noscroll {
+    width: 140px;
+    height: 140px;
+  }
   //TODO: ADD RESPONSIVENESS TO WORDFOLDER/IMAGESELECTOR
+
+  // Cheesy way of responsiveness (TO BE FIXED)
+  .v-gridlayout-gridlayout[height-range~="0-700px"] {
+    .v-image {
+      width: 100px;
+      height: 100px;
+    }
+
+    .noscroll {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .v-gridlayout-gridlayout[height-range~="701px-"] {
+    .v-image {
+      width: 140px;
+      height: 140px;
+    }
+
+    .noscroll {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
 
 }

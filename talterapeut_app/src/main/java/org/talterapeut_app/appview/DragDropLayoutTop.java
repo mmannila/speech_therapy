@@ -24,8 +24,7 @@ public class DragDropLayoutTop extends CssLayout {
         for (int i = 0; i < 3; i++) {
             DDPanel top = new DDPanel();
             top.addStyleName("noscroll");
-            top.setWidth("140px");
-            top.setHeight("140px");
+            top.setSizeUndefined();
             top.setDragMode(LayoutDragMode.CLONE);
             top.setDropHandler(new SwapPanelDropHandler());
             topPanels.add(top);

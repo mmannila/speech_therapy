@@ -12990,6 +12990,10 @@ div.v-layout.v-horizontal.v-widget {
 	border: 1px solid #a8abd6;
 }
 
+.mytheme .v-panel-content-noscroll {
+	overflow: hidden;
+}
+
 .mytheme .v-ui {
 	background-color: #00f030;
 }
@@ -13062,20 +13066,6 @@ div.v-layout.v-horizontal.v-widget {
 	font-weight: bold;
 }
 
-.mytheme .v-panel-content-noscroll {
-	overflow: hidden;
-}
-
-.mytheme .v-verticallayout-loginviewcontainer {
-	margin-top: 50px;
-}
-
-.mytheme .v-button-categorybutton {
-	margin: 2px;
-	width: 100px;
-	height: 50px;
-}
-
 .mytheme .v-button {
 	height: 37px;
 	color: #ecf2f8;
@@ -13092,6 +13082,21 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0 19px;
 	font-weight: bold;
 	min-width: 81px;
+}
+
+.mytheme .v-verticallayout-loginviewcontainer {
+	margin-top: 50px;
+}
+
+.mytheme .v-panel-content-selectorpanel {
+	width: 450px;
+	height: 400px;
+}
+
+.mytheme .v-button-categorybutton {
+	margin: 2px;
+	width: 100px;
+	height: 50px;
 }
 
 .mytheme .v-button-secondary {
@@ -13127,4 +13132,29 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-verticallayout-categorylayout {
 	padding: 10px;
+}
+
+.mytheme .noscroll {
+	width: 140px;
+	height: 140px;
+}
+
+.mytheme .v-gridlayout-gridlayout[height-range~="0-700px"] .v-image {
+	width: 100px;
+	height: 100px;
+}
+
+.mytheme .v-gridlayout-gridlayout[height-range~="0-700px"] .noscroll {
+	width: 100px;
+	height: 100px;
+}
+
+.mytheme .v-gridlayout-gridlayout[width-range~="0-600px"] .v-image {
+	width: 100px;
+	height: 100px;
+}
+
+.mytheme .v-gridlayout-gridlayout[width-range~="0-600px"] .noscroll {
+	width: 100px;
+	height: 100px;
 }

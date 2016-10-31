@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.vaadin.server.Responsive;
 import org.talterapeut_app.appview.DragDropLayoutBottom;
 import org.talterapeut_app.appview.DragDropLayoutTop;
 import org.talterapeut_app.appview.RandomButton;
@@ -58,6 +59,8 @@ public class AppView extends VerticalLayout implements View {
         randomButton = new RandomButton();
         playPhraseButton = new SoundButton();
         resetButton = new ResetButton();
+        Responsive.makeResponsive(gridLayout);
+        gridLayout.addStyleName("gridlayout");
 
         // inserts components in grid layout
         gridLayout.addComponent(wordSelectLayout, 0, 0);
