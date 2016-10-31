@@ -72,6 +72,7 @@ public class AppView extends VerticalLayout implements View {
         gridLayout.addComponent(resetButton, 2, 2);
         gridLayout.addComponent(audio); // where to add, actually?
 
+        gridLayout.setColumnExpandRatio(0, 0);
         gridLayout.setComponentAlignment(folderButton, Alignment.TOP_CENTER);
 
         addComponent(gridLayout);
@@ -116,14 +117,10 @@ public class AppView extends VerticalLayout implements View {
         dragDropLayoutsTop.resetDragDropArea();
         dragDropLayoutsBottom.resetDragDropArea();
 
-        Image image = setOfImages.get(0);
-        image.setWidth("100px");
-        image.setHeight("100px");
+        Image image;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < getPhraseLength(); i++) {
             image = setOfImages.get(i);
-            image.setWidth("100px");
-            image.setHeight("100px");
             // dragDropLayouts.addPicture(image);
             dragDropLayoutsBottom.addPicture(image);
         }
@@ -153,13 +150,17 @@ public class AppView extends VerticalLayout implements View {
         imageOfVerb.setDescription("Verb");
         setOfImages.add(imageOfVerb);
 
-        // Object
-        ArrayList<Image> Objects = ImageLoader.loadImages(basepath
-                + "/WEB-INF/objekt/");
-        randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
-        Image imageOfObject = Objects.get(randomIndex);
-        imageOfObject.setDescription("Object");
-        setOfImages.add(imageOfObject);
+
+        if (getPhraseLength() > 2) {
+            // Object
+            ArrayList<Image> Objects = ImageLoader.loadImages(basepath
+                    + "/WEB-INF/objekt/");
+            randomIndex = ThreadLocalRandom.current().nextInt(0, Objects.size());
+            Image imageOfObject = Objects.get(randomIndex);
+            imageOfObject.setDescription("Object");
+            setOfImages.add(imageOfObject);
+        }
+
 
         Collections.shuffle(setOfImages);
         reset();

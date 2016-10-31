@@ -17,7 +17,6 @@ public class ProfileView extends VerticalLayout implements View {
     Label profileHeader = new Label();
 
     public ProfileView() {
-
         profileHeader.addStyleName(ValoTheme.LABEL_H2);
 
         Panel changeEmail = new Panel("Change E-mail Address");

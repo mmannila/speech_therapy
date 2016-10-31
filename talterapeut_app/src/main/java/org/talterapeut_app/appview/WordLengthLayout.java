@@ -35,7 +35,9 @@ public class WordLengthLayout extends VerticalLayout {
         // fourWordButton.addClickListener(setWordCount);
 
         twoWordButton.setWidth("100%");
+        twoWordButton.addStyleName("wordlength");
         threeWordButton.setWidth("100%");
+        threeWordButton.addStyleName("wordlength");
         // fourWordButton.setWidth("100%");
 
         addComponent(twoWordButton);
