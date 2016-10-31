@@ -41,19 +41,22 @@
     bottom: 0;
   }
 
+  .v-textfield {
+    border: 1px solid #a8abd6;
+  }
+
+  .v-panel-content-noscroll{
+    overflow: hidden;
+  }
+
   .v-image {
     width: 140px;
     height: 140px;
   }
 
-  .v-textfield {
-    border: 1px solid #a8abd6;
-  }
-
   .v-ui {
-    background-color: hsl(132, 100%, 47%);
+    background-color: rgba(67, 202, 245, 0.58)
   }
-
 
   .v-panel {
     margin-top: 10px;
@@ -73,7 +76,7 @@
   }
 
   .v-window-wrap {
-    background-color: hsl(132, 100%, 47%);
+    background-color: rgba(67, 202, 245, 0.58);
   }
 
   .v-window-header {
@@ -113,6 +116,8 @@
     border-radius: 5px;
   }
 
+  // TODO: ADD PANEL RESPONSIVENESS (SHRINK TO 100x100 PIXELS ON RATIO OF LESS THAN 60%)
+
   .v-window-closebox {
 
     color: #ecf2f8;
@@ -123,20 +128,6 @@
     box-shadow: inset 0 1px 0 #4d98e6, inset 0 -1px 0 #166bca, 0 2px 3px rgba(0, 0, 0, 0.05);
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
     font-weight: bold;
-  }
-
-  .v-panel-content-noscroll {
-    overflow: hidden;
-  }
-
-  .v-verticallayout-loginviewcontainer {
-    margin-top: 50px;
-  }
-
-  .v-button-categorybutton {
-    margin: 2px;
-    width: 100px;
-    height: 50px;
   }
 
   .v-button {
@@ -157,7 +148,39 @@
     min-width: 81px;
   }
 
+  .v-verticallayout-loginviewcontainer {
+    margin-top: 50px;
+  }
+
+  .v-panel-content-selectorpanel {
+    background-color: white;
+    width: 450px;
+    height: 400px;
+  }
+
+  .v-button-categorybutton {
+    margin: 2px;
+    width: 100px;
+    height: 50px;
+  }
+
+  .v-button-secondary {
+
+    color: rgba(40, 40, 40, 0.76);
+    background-color: #bbbbbb;
+    background-image: -webkit-linear-gradient(top, #bbbbbb 2%, #a8a8ab 98%);
+    background-image: linear-gradient(to bottom, #bbbbbb 2%, #a8a8ab 98%);
+
+    /*
+    color: #ecf2f8;
+    background-color: #87bcc4;
+    background-image: -webkit-linear-gradient(top, #b5b8bf 2%, #8b8b8e 98%);
+    background-image: linear-gradient(to bottom, #b5b8bf 2%, #8b8b8e 98%);
+    */
+  }
+
   .v-button-wordlength {
+    z-index: 1;
     min-width: 135px;
   }
 
@@ -184,4 +207,22 @@
     padding: 10px;
   }
 
+  .noscroll {
+    width: 140px;
+    height: 140px;
+  }
+  //TODO: ADD RESPONSIVENESS TO WORDFOLDER/IMAGESELECTOR
+
+  // Cheesy way of responsiveness (TO BE FIXED)
+  .v-gridlayout-gridlayout[height-range~="0-800px"] {
+    .v-image {
+      width: 100px;
+      height: 100px;
+    }
+
+    .noscroll {
+      width: 100px;
+      height: 100px;
+    }
+  }
 }

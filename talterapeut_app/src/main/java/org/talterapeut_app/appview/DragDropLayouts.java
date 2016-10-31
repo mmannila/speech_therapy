@@ -2,6 +2,7 @@ package org.talterapeut_app.appview;
 
 import java.util.ArrayList;
 
+import com.vaadin.server.Responsive;
 import org.talterapeut_app.AppView;
 
 import com.vaadin.ui.Component;
@@ -36,16 +37,16 @@ public class DragDropLayouts extends VerticalLayout {
 
         for (int i = 0; i < 3; i++) {
             DDPanel top = new DDPanel();
-            top.setWidth("140px");
-            top.setHeight("140px");
+            top.addStyleName("noscroll");
+            top.setSizeUndefined();
             top.setDragMode(LayoutDragMode.CLONE);
             top.setDropHandler(new SwapPanelDropHandler());
             topPanels.add(top);
             dragDropAreaTop.addComponent(topPanels.get(i));
 
             DDPanel bottom = new DDPanel();
-            bottom.setWidth("140px");
-            bottom.setHeight("140px");
+            bottom.addStyleName("noscroll");
+            bottom.setSizeUndefined();
             bottom.setDragMode(LayoutDragMode.CLONE);
             bottom.setDropHandler(new SwapPanelDropHandler());
             bottomPanels.add(bottom);

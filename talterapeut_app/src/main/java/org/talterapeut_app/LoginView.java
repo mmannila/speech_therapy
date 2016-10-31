@@ -39,11 +39,13 @@ public class LoginView extends LoginViewLayout{
         emailUsernameField.setVisible(true);
         emailField.setVisible(false);
         cancelButton.setVisible(false);
+        cancelButton.addStyleName("secondary");
         registerButton.setVisible(false);
         usernameField.setVisible(false);
 
         loginButton.setVisible(true);
         createUserButton.setVisible(true);
+        createUserButton.addStyleName("secondary");
         usernameField.clear();
         passwordField.clear();
         emailUsernameField.clear();

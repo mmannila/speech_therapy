@@ -98,8 +98,7 @@ public class WordFolder extends Button implements Button.ClickListener {
         columnHolder.addComponent(imageCol2);
         columnHolder.addComponent(imageCol3);
         imagePanel = new Panel();
-        imagePanel.setWidth(450.0f, Unit.PIXELS);
-        imagePanel.setHeight(400.0f, Unit.PIXELS);
+        imagePanel.addStyleName("selectorpanel");
         imagePanel.setContent(columnHolder);
         midContent.addComponent(imagePanel);
 
@@ -111,8 +110,6 @@ public class WordFolder extends Button implements Button.ClickListener {
         contentLayout.addComponent(phraseHolderLayout);
         contentLayout.setComponentAlignment(phraseHolderLayout, Alignment.BOTTOM_CENTER);
 
-
-        // TODO: USE FONTICONS AS PLACEHOLDERS
         phraseSubjImage = new Image();
         phraseSubjImage.setDescription("Subject");
         phraseSubjImage.addStyleName("selectorphraseimage");
