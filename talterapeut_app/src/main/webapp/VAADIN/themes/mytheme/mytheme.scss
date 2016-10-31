@@ -55,7 +55,7 @@
   }
 
   .v-ui {
-    background-color: rgba(67, 202, 245, 0.58)
+    background-color: rgba(67, 202, 245, 0.58);
   }
 
   .v-panel {
@@ -104,7 +104,6 @@
   }
 
   .v-panel-content {
-    background-color: #ecf2f8;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -115,8 +114,6 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
   }
-
-  // TODO: ADD PANEL RESPONSIVENESS (SHRINK TO 100x100 PIXELS ON RATIO OF LESS THAN 60%)
 
   .v-window-closebox {
 
@@ -137,6 +134,7 @@
     border: 1px solid #1362b1;
     border-top-color: #156ab3;
     border-bottom-color: #1156a8;
+    background: #197de1;
     background-color: #197de1;
     background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
     background-image: linear-gradient(to bottom, #1b87e3 2%, #166ed5 98%);
@@ -170,13 +168,6 @@
     background-color: #bbbbbb;
     background-image: -webkit-linear-gradient(top, #bbbbbb 2%, #a8a8ab 98%);
     background-image: linear-gradient(to bottom, #bbbbbb 2%, #a8a8ab 98%);
-
-    /*
-    color: #ecf2f8;
-    background-color: #87bcc4;
-    background-image: -webkit-linear-gradient(top, #b5b8bf 2%, #8b8b8e 98%);
-    background-image: linear-gradient(to bottom, #b5b8bf 2%, #8b8b8e 98%);
-    */
   }
 
   .v-button-wordlength {
@@ -211,8 +202,13 @@
     width: 140px;
     height: 140px;
   }
-  //TODO: ADD RESPONSIVENESS TO WORDFOLDER/IMAGESELECTOR
 
+  //TODO: REMOVE SHADOWS FROM PROFILEVIEW-PANEL
+  .v-panel-content-profilepanel {
+    background: transparent;
+  }
+
+  // TODO: ADD PANEL RESPONSIVENESS (SHRINK TO 100x100 PIXELS ON RATIO OF LESS THAN 60%)
   // Cheesy way of responsiveness (TO BE FIXED)
   .v-gridlayout-gridlayout[height-range~="0-800px"] {
     .v-image {
@@ -225,4 +221,7 @@
       height: 100px;
     }
   }
+
+  //TODO: ADD RESPONSIVENESS TO WORDFOLDER/IMAGESELECTOR
+
 }

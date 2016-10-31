@@ -13043,7 +13043,6 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-panel-content {
-	background-color: #ecf2f8;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -13073,6 +13072,7 @@ div.v-layout.v-horizontal.v-widget {
 	border: 1px solid #1362b1;
 	border-top-color: #156ab3;
 	border-bottom-color: #1156a8;
+	background: #197de1;
 	background-color: #197de1;
 	background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
 	background-image: linear, to bottom, #1b87e3 2%, #166ed5 98%;
@@ -13138,6 +13138,10 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .noscroll {
 	width: 140px;
 	height: 140px;
+}
+
+.mytheme .v-panel-content-profilepanel {
+	background: transparent;
 }
 
 .mytheme .v-gridlayout-gridlayout[height-range~="0-800px"] .v-image {

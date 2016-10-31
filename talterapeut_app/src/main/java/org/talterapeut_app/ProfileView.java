@@ -37,6 +37,7 @@ public class ProfileView extends VerticalLayout implements View {
         profileLayout.addComponent(changePassword);
 
         Panel profilePanel = new Panel();
+        profilePanel.addStyleName("profilepanel");
         profilePanel.setContent(profileLayout);
         profilePanel.addStyleName(ValoTheme.PANEL_BORDERLESS);
         profilePanel.setSizeFull();
